@@ -1,8 +1,8 @@
-#Unity_Explore
+# Unity_Explore
 A repo recording my learning path in unity.
 The exploration is led by scene.
 
-##MeshBasicScene
+## MeshBasicScene
  - Change the skybox (mat) via ```Window/Rendering/Lighting/Environment```.
  - Create simple 3d mesh via ```+/3D Objects```. 
  - Adjust mesh position, rotation, scale in Inspector View. 
