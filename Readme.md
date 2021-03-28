@@ -11,3 +11,4 @@ The exploration is led by scene.
  - Inspect the mesh in view via ```Shift + F```.
  - Align the mesh via ```Shift + V``` between two features, e.g. corner, of the target meshes.
  - Group mesh together via selecting and ```+/Group Empty Parent```.
+ - Define mesh as Prefab via ```dragging into Prefabs/``` so as to be able to change parent mesh by change prefab child mesh.
