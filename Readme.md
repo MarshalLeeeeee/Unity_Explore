@@ -15,7 +15,11 @@ The exploration is led by scene.
  - Add physics to the mesh via ```Add Component / Rigidbody```. ```Use Gravity``` determine if the rigidbody is affected by the gravity force toward minus Y. ```Drag``` act like a damping parameter, higher the value, higher the damping. ```Is Kinematic``` determine if the update() of the mesh is fully dependent on the script or animation.
 
 
-
 ## MaterialScene
  - Create a new material via ```right clicking parent folder in project view / Create / Material```.
  - Load texture image via ```dragging the target image to Base Map```. The albedo color still affects. 
+
+
+## LightingScene
+ - Create ```Direct Light``` which creates the global light in the scene. The position of direct light will not affect the lighting effect while the angle define the global direction of light.
+ - Create ```Spot Light``` which creates a cone light in the scene. ```Inner / Outer angle``` defines the angle attenuation, which is ```saturate((d-cos(r_o))/(cos(r_i)-cos(r_o)), min=0, max=1)```.
