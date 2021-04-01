@@ -13,6 +13,15 @@ The exploration is led by scene.
  - Group mesh together via selecting and ```+ / Group Empty Parent```.
  - Define mesh as Prefab via ```dragging into Prefabs/``` so as to be able to change parent mesh by change prefab child mesh.
  - Add physics to the mesh via ```Add Component / Rigidbody```. ```Use Gravity``` determine if the rigidbody is affected by the gravity force toward minus Y. ```Drag``` act like a damping parameter, higher the value, higher the damping. ```Is Kinematic``` determine if the update() of the mesh is fully dependent on the script or animation.
+ - Add script to the object via ```Add Component / New Script```.
+
+#### Script & API
+ - The Script name has to be identical with the class name. (Automatically done via ```Add Component / New Script```.) 
+ - Start(), Update(), ... are ```Event Functions``` in Unity. Running a Unity script executes a number of event functions in a predetermined order, for details click [here](https://docs.unity3d.com/Manual/ExecutionOrder.html). The ```Physics```, which contains ```OnTriggerXXX(), OnCollideXXX(), ...``` is seperated from ```Game Logic```, which contains ```Update(), LateUpdate(), ...```. Therefore, an GameObject with ```RigidBody``` which gives physics can also be affected by ```Update()```.
+ - Transform: Position, rotation and scale of an object. Transform follows the hierarchy of the scene. Every Transform can have at most one parent and several children. Transform is relative to the parent transform, which can be visualized by ```Pivot Local Coordinate```. For detailed API of Transform, click [here](https://docs.unity3d.com/ScriptReference/Transform.html).
+   - Get the parent by ```transform.parent```. Get children by ```transform``` which is iterable, or by ```GetChild(index)```.
+   - To relationship between local and world coordinate is ```transform.parent.localToWorldMatrix.MultiplyPoint3x4(transform.localPosition)) == transform.localToWorldMatrix.MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f)) == transform.position``` and ```transform.parent.worldToLocalMatrix.MultiplyPoint3x4(transform.position)) == Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale).MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f))) == transform.localPosition```. The reason why we use ```transform.parent.localToWorldMatrix``` is becasue ```localPosition, localRotation, localScale``` is all relative to the parent transform. Via ```Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale)```, we get the relative tranform between child and parent.
+   - Transform also stores the tag of the gameObject.
 
 
 ## MaterialScene
