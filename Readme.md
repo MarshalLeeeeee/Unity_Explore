@@ -23,6 +23,7 @@ The exploration is led by scene.
    - Get the parent by ```transform.parent```. Get children by ```transform``` which is iterable, or by ```GetChild(index)```.
    - To relationship between local and world coordinate is ```transform.parent.localToWorldMatrix.MultiplyPoint3x4(transform.localPosition)) == transform.localToWorldMatrix.MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f)) == transform.position``` and ```transform.parent.worldToLocalMatrix.MultiplyPoint3x4(transform.position)) == Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale).MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f))) == transform.localPosition```. The reason why we use ```transform.parent.localToWorldMatrix``` is becasue ```localPosition, localRotation, localScale``` is all relative to the parent transform. Via ```Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale)```, we get the relative tranform between child and parent.
    - Transform also stores the tag of the gameObject.
+ - Mathf: A collection of common math functions. For detailed API of Mathf, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
 
 
 ## MaterialScene
