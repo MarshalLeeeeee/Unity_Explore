@@ -15,6 +15,7 @@ The exploration is led by scene.
  - Add physics to the mesh via ```Add Component / Rigidbody```. ```Use Gravity``` determine if the rigidbody is affected by the gravity force toward minus Y. ```Drag``` act like a damping parameter, higher the value, higher the damping. ```Is Kinematic``` determine if the update() of the mesh is fully dependent on the script or animation.
  - Add script to the object via ```Add Component / New Script```.
 
+
 #### Script & API
  - The Script name has to be identical with the class name. (Automatically done via ```Add Component / New Script```.) 
  - Start(), Update(), ... are ```Event Functions``` in Unity. Running a Unity script executes a number of event functions in a predetermined order, for details click [here](https://docs.unity3d.com/Manual/ExecutionOrder.html). The ```Physics```, which contains ```OnTriggerXXX(), OnCollideXXX(), ...``` is seperated from ```Game Logic```, which contains ```Update(), LateUpdate(), ...```. Therefore, an GameObject with ```RigidBody``` which gives physics can also be affected by ```Update()```.
@@ -32,3 +33,8 @@ The exploration is led by scene.
 ## LightingScene
  - Create ```Direct Light``` which creates the global light in the scene. The position of direct light will not affect the lighting effect while the angle define the global direction of light.
  - Create ```Spot Light``` which creates a cone light in the scene. ```Inner / Outer angle``` defines the angle attenuation, which is ```saturate((d-cos(r_o))/(cos(r_i)-cos(r_o)), min=0, max=1)```.
+
+
+## AudioScene
+ - The sound of the scene is listened by ```Audio Listener```. There could be one and only one ```Audio Listener``` in the scene. By default, it is within the ```Main Camera```.
+ - Attach a sound affect to a game object via ```Add Component / Audio Source```. Select the sound file in ```AudioClip```. Mark ```Loop``` for continuous play'''. 2D / 3D effect is controlled by ```Spatial Blend```. In ```3D Sound Settings```, we can activate ```Doppler Level``` and customize the ```Volume Rolloff```, which reflects the relationship between distance and ratio of volume.
