@@ -39,3 +39,9 @@ The exploration is led by scene.
 ## AudioScene
  - The sound of the scene is listened by ```Audio Listener```. There could be one and only one ```Audio Listener``` in the scene. By default, it is within the ```Main Camera```.
  - Attach a sound affect to a game object via ```Add Component / Audio Source```. Select the sound file in ```AudioClip```. Mark ```Loop``` for continuous play'''. 2D / 3D effect is controlled by ```Spatial Blend```. In ```3D Sound Settings```, we can activate ```Doppler Level``` and customize the ```Volume Rolloff```, which reflects the relationship between distance and ratio of volume.
+
+
+## 2DScene (not included in this repo)
+ - In a 2D template project, the camera is orthographic by default. The canvas is parallel to XY-Plane where the the width is measured in ```X``` and height is measured in ```Y```. Since the camera is orthographic, ```Z``` does not affect the size of a game object, however, affected the visibility among multiple objects. What's more, only when the ```Z coordinate``` of an object is within the camera clipping planes will it be seen by camera.
+ - We can alter the scene view between 2D and 3D via ```2D Button``` in the tool bar of scene view so as to visualize the depth of objects.
+ - The basic 2D object is called Sprite. We can define the specific sprite shape in ```Sprite Renderer / Sprite```. We can add ```Rigidbody 2D``` alike what we do to 3D meshes. One thing different from 3D mesh is that, the collider is added to 3D mesh by default, but it's not the case in 2D case. Thus, we have to add collider with the specific shape type to the sprite with which we can use ```OnCollideXXX()```. The ```Polygon Collider``` provides the tight(est) bound.
