@@ -16,6 +16,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Group mesh together via selecting and ```+ / Group Empty Parent```.
  - Define mesh as Prefab via ```dragging into Prefabs/``` so as to be able to change parent mesh by change prefab child mesh.
  - Add physics to the mesh via ```Add Component / Rigidbody```. ```Use Gravity``` determine if the rigidbody is affected by the gravity force toward minus Y. ```Drag``` act like a damping parameter, higher the value, higher the damping. ```Is Kinematic``` determine if the update() of the mesh is fully dependent on the script or animation.
+ - For parent GameObject with children components, use the collider of the child mesh with the rigidbody of the parent.
  - Add script to the object via ```Add Component / New Script```.
 
 
