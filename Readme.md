@@ -37,7 +37,10 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
 ### InteractionScene
  - The camera follows the player in a third person manner by a script which update the position of the camera according to the position of a GameObject reference. 
- - Object is controlled by the player through ```Input.GetAxis(string axisName)```. ```Input.GetAxis(string axisName)``` returns the value of the virtual axis identified by ```axisName```. 
+ - Object is controlled by the player through ```Input```. Detailed introduction of ```Input``` can refer to __Section:Script & API__ / Input.
+ - Define behaviour that will be periodically happened as prefab. The prefab can store variables of its own. 
+ - Instantiate new object relative to another object via ```Instantiate(Object obj, Transform parent)```, in which case the bahaviour of prefab is also relative to its parent.
+ - We can set the life time ```t``` of an object ```obj``` by implementing ```Destroy(obj, t)``` in ```Start()```.
 
 
 ### 2DScene (not included in this repo)
@@ -52,7 +55,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Start(), Update(), ... are ```Event Functions``` in Unity. Running a Unity script executes a number of event functions in a predetermined order, for details click [here](https://docs.unity3d.com/Manual/ExecutionOrder.html). The ```Physics```, which contains ```OnTriggerXXX(), OnCollideXXX(), ...``` is seperated from ```Game Logic```, which contains ```Update(), LateUpdate(), ...```. Therefore, an GameObject with ```RigidBody``` which gives physics can also be affected by ```Update()```.
  - Object: Base class for all objects Unity can reference. Therefore, for static methods, we do not have to explicit write prefix ```Object.```. For detailed API of Object, click [here](https://docs.unity3d.com/ScriptReference/Object.html).
    - Every object in unity can transfer to string via ```ToString()```.
-   - We can destroy an object ```obj``` with time delay ```t``` via ```Destroy(Object obj, float t = 0.0f)```. E.g., we can set the life time of an object by implementing ```Destroy()``` in ```Start()```.
+   - We can destroy an object ```obj``` with time delay ```t``` via ```Destroy(Object obj, float t = 0.0f)```. 
    - We can instantiate an object ```original``` via ```Instantiate(Object original)```. We can specify the parent of ```original``` via ```Transform parent``` parameter which is suppoted by some overloads, otherwise ```original``` will not have parent. We can specify ```Vector3 position``` and ```Quaternion rotation``` in world coordinate, otherwise ```original``` is instantiated as the default position and rotation of the mesh or prefab, either in world coordinate or parent coordinate.
  - Transform: Position, rotation and scale of an object. Transform follows the hierarchy of the scene. Every Transform can have at most one parent and several children. Transform is relative to the parent transform, which can be visualized by ```Pivot Local Coordinate```. For detailed API of Transform, click [here](https://docs.unity3d.com/ScriptReference/Transform.html).
    - Get the parent by ```transform.parent```. Get children by ```transform``` which is iterable, or by ```GetChild(index)```.
