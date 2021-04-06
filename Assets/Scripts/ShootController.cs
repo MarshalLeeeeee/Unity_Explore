@@ -5,35 +5,40 @@ using UnityEngine;
 public class ShootController : MonoBehaviour
 {
     public GameObject bullet;
-    public int shootSpeed = 10;
+    public float shootInterval = 0.5f;
     private bool shootMode = true; // true for semi-auto, false for auto
-    private int previousFrame = -999;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            CancelInvoke();
             if (shootMode) shootMode = false;
             else shootMode = true;
         }
         if (shootMode)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-                && Time.frameCount - previousFrame > shootSpeed)
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
-                Instantiate(bullet, transform);
-                previousFrame = Time.frameCount;
+                InstantiateBullet();
             }
         }
         else
         {
-            if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
-                && Time.frameCount - previousFrame > shootSpeed)
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
-                Instantiate(bullet, transform);
-                previousFrame = Time.frameCount;
+                InvokeRepeating("InstantiateBullet", 0.0f, shootInterval);
+            }
+            else if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+            {
+                CancelInvoke();
             }
         }
+    }
+
+    void InstantiateBullet()
+    {
+        Instantiate(bullet, transform);
     }
 }
