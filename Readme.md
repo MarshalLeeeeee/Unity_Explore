@@ -54,7 +54,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
 
 ## Script & API
- - The Script name has to be identical with the class name. (Automatically done via ```Add Component / New Script```.) 
+ - The Script name has to be identical with the class name. (Automatically done via ```Add Component / New Script```.) Therefore, script name, the same as the class name, is also a valid type in C# script, e.g., we can use ```GetComponent<ScriptName>()``` to get the reference to the class object to get the public fields and use the public methods.
 
  - MonoBehaviour: The base class from which every Unity script derives. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html)
    - Start(), Update(), ... are ```Event Functions``` in Unity. Running a Unity script executes a number of event functions in a predetermined order, for details click [here](https://docs.unity3d.com/Manual/ExecutionOrder.html). The ```Physics```, which contains ```OnTriggerXXX(), OnCollideXXX(), ...``` is seperated from ```Game Logic```, which contains ```Update(), LateUpdate(), ...```. Therefore, an GameObject with ```RigidBody``` which gives physics can also be affected by ```Update()```. 
@@ -66,8 +66,11 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - We can destroy an object ```obj``` with time delay ```t``` via ```Destroy(Object obj, float t = 0.0f)```. 
    - We can instantiate an object ```original``` via ```Instantiate(Object original)```. We can specify the parent of ```original``` via ```Transform parent``` parameter which is suppoted by some overloads, otherwise ```original``` will not have parent. We can specify ```Vector3 position``` and ```Quaternion rotation``` in world coordinate, otherwise ```original``` is instantiated as the default position and rotation of the mesh or prefab, either in world coordinate or parent coordinate.
 
+ - GameObject: Base class for all entities in Unity Scenes. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/GameObject.html).
+   - We can find an GameObject by name via ```Find(string name)```. ```name``` with '/' can indicate a hierarchy path name. Note that ```Find(string name)``` returns exactly one GameObject, but Unity allows duplicate names for different GameObjects. So it would be better to give different absolute name to different GameObjects and we can organize the same kind of GameObjects with the same tag and fetch the list of them with ```FindGameObjectsWithTag(string tag)```.
+
  - Transform: Position, rotation and scale of an object. Transform follows the hierarchy of the scene. Every Transform can have at most one parent and several children. Transform is relative to the parent transform, which can be visualized by ```Pivot Local Coordinate```. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Transform.html).
-   - Get the parent by ```transform.parent```. Get children by ```transform``` which is iterable, or by ```GetChild(index)```.
+   - Get the parent by ```transform.parent```. Get children by ```transform``` which is iterable, or by ```GetChild(int index)```. We can also get a child with its name by ```Find(string name)```.
    - To relationship between local and world coordinate is ```transform.parent.localToWorldMatrix.MultiplyPoint3x4(transform.localPosition)) == transform.localToWorldMatrix.MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f)) == transform.position``` and ```transform.parent.worldToLocalMatrix.MultiplyPoint3x4(transform.position)) == Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale).MultiplyPoint3x4(new Vector3(0.0f, 0.0f, 0.0f))) == transform.localPosition```. The reason why we use ```transform.parent.localToWorldMatrix``` is becasue ```localPosition, localRotation (localEulerAngles), localScale``` is all relative to the parent transform. Via ```Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale)```, we get the relative tranform between child and parent.
    - ```position, rotation (eulerAngles), scale``` store the information in the world coordinate.
    - Update either ```eulerAngle (Vector3)``` or ```rotation (Quaternion)``` will make the object rotate and update the other one automatically.
