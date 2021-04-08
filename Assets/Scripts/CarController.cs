@@ -6,12 +6,20 @@ public class CarController : MonoBehaviour
 {
     public float forwardSpeedMax;
     public float forwardAcceleration;
-    private float forwardSpeed;
     public float turnSpeed;
+    public float jumpForce;
+
+    private float forwardSpeed;
+    private Rigidbody rb;
+    private bool onGround;
+    private bool shouldJump;
 
     private void Start()
     {
         forwardSpeed = 0.0f;
+        rb = GetComponent<Rigidbody>();
+        onGround = true;
+        shouldJump = false;
     }
 
     // Update is called once per frame
@@ -38,5 +46,28 @@ public class CarController : MonoBehaviour
 
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
         transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * forwardSpeed * horizontalInput);
+
+        if (Input.GetKeyDown(KeyCode.Space) && onGround)
+        {
+            shouldJump = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (shouldJump)
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+            onGround = false;
+            shouldJump = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Floor"))
+        {
+            onGround = true;
+        }
     }
 }
