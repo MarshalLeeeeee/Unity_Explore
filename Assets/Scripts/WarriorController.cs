@@ -59,19 +59,8 @@ public class WarriorController : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
         transform.Translate(Vector3.right * Time.deltaTime * horizonSpeed);
 
-        float velocityMod = Mathf.Sqrt(horizonSpeed * horizonSpeed + forwardSpeed * forwardSpeed);
         warriorAnim.SetFloat("forwardVelocity", forwardSpeed);
         warriorAnim.SetFloat("horizonVelocity", horizonSpeed);
         Debug.Log(forwardSpeed.ToString() + " , " + horizonSpeed.ToString());
-        /*if (velocityMod != 0.0f)
-        {
-            warriorAnim.SetFloat("forwardVelocity", forwardSpeed / velocityMod);
-            warriorAnim.SetFloat("horizonVelocity", horizonSpeed / velocityMod);
-        }
-        else
-        {
-            warriorAnim.SetFloat("forwardVelocity", 0.0f);
-            warriorAnim.SetFloat("horizonVelocity", 0.0f);
-        }*/
     }
 }
