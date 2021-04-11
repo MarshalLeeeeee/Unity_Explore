@@ -45,6 +45,13 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Implement jump by applying force to the ```Rigidbody```. We should get user input in ```Update()``` and apply physics in ```FixedUpdate()```.
 
 
+### AnimationScene
+ - Add ```Animator``` to GameObejct which point to an ```animation controller``` which defines the configuration and transition of meta animations and ```avatar``` which defines the structure, e.g. the bone structure, of the character.
+ - We can define animation state and their transitions in Animator Editor. One state is set as default state which serves as the first state when the animation starts.
+ - We can blend animation with ```Blend Tree``` which interpolates two or more animations via defined parameter. The specific blending method is defined by ```Blend Type```. In this scene, we blend idle, walk in 4 directions and run forward using ```2D Freeform Directional```. ```2D Freeform Directional``` allows multiple animations in the same direction, e.g. in our case walk forward and run forward, while ```2D Simple Directional``` does not allow such case. ```2D Freeform Cartesian``` is best used when the parameter does not represent the direction. For more details, click [here](https://docs.unity3d.com/Manual/BlendTree-2DBlending.html).
+ - The controller script can communicate with Animator by first ```GetComponent<Animator>()``` and use methods like ```SetFloat()``` to change the parameters in animator controller.
+
+
 ### 2DScene (not included in this repo)
  - In a 2D template project, the camera is orthographic by default. The canvas is parallel to XY-Plane where the the width is measured in ```X``` and height is measured in ```Y```. Since the camera is orthographic, ```Z``` does not affect the size of a game object, however, affected the visibility among multiple objects. What's more, only when the ```Z coordinate``` of an object is within the camera clipping planes will it be seen by camera.
  - We can alter the scene view between 2D and 3D via ```2D Button``` in the tool bar of scene view so as to visualize the depth of objects.
@@ -100,3 +107,6 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
  - Debug: Class containing methods to ease debugging while developing. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Debug.html).
    - Print a message at the bottom of game view via ```Log()```.
+
+ - Animator: Interface to control the Mecanim animation system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Animator.html).
+   - Set parameters in controller by ```SetFloat(), SetInteger(), SetBool(), SetTrigger()``` which corresponds to the four data types in animator controller.

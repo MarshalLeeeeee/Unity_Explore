@@ -1137,8 +1137,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 382948839}
-  cameraDistance: 3
+  cameraForwardDistance: -3
+  cameraUpDistance: 1
   forseenAngle: 30
+  mouseControl: 0
 --- !u!1 &2046264596
 GameObject:
   m_ObjectHideFlags: 0
