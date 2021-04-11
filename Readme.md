@@ -36,7 +36,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
 
 ### InteractionScene
- - The camera follows the player in a third person manner by a script which update the position of the camera according to the position of a GameObject reference. 
+ - The camera follows the player in a third person manner by a script which update the position of the camera according to the position of a GameObject reference. The angle of camera is controlled by user's mouse.
  - Object is controlled by the player through ```Input```. Detailed introduction of ```Input``` can refer to __Section:Script & API__ / Input.
  - Define behaviour that will be periodically happened as prefab. The prefab can store variables of its own. 
  - We can set the life time ```t``` of an object ```obj``` by implementing ```Destroy(obj, t)``` in ```Start()```.
@@ -84,7 +84,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Mathf: A collection of common math functions. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
 
  - Input: Interface into the Input system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Input.html).
-   - Get the value of the virtual axis via ```Input.GetAxis()``` in continuous field in [-1,1] or ```Input.GetAxisRaw()``` in discrete field in {-1 ,0 ,1}. To set up input or view the options for ```axisName``` via ```Edit / Project Settings / Input Manager```. The options include the trigger event for positive and negative reactions.
+   - Get the value of the virtual axis via ```Input.GetAxis()``` in continuous field in [-1,1] or ```Input.GetAxisRaw()``` in discrete field in {-1 ,0 ,1}. To set up input or view the options for ```axisName``` via ```Edit / Project Settings / Input Manager```. The options include the trigger event for positive and negative reactions. It is proper for retrieving user's mouse and joystick movement.
    - Get specific key interaction, including keyboard, mouse and joystick, via ```GetKeyDown(...)``` which detects if the user starts pressing one key down, ```GetKey(...)``` which detects if the user keeps holding one key down, ```GetKeyUp(...)``` which detects if the user starts releasing one key up. This brings more flexifibility than the previous introduced virtual axis.
    - Gey specific mouse interaction via ```GetMouseButtonDown(...)``` which detects if the user starts pressing one mouse button down, ```GetMouseButton(...)``` which detects if the user keeps holding one mouse button down, ```GetMouseButtonUp(...)``` which detects if the user starts releasing one mouse button up. This is equivalent to ```GetKeyXXX()``` whose parameter is ```KeyCode.MouseX```. 
 
