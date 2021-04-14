@@ -8,19 +8,51 @@ public class WarriorController : MonoBehaviour
     public float forwardSpeedMax = 10.0f;
     public float horizonAcceleration = 0.25f;
     public float horizonSpeedMax = 2.0f;
+    public float upForce = 5.0f;
+    public float riseTime = 0.15f;
+    public float horizonSensitivity = 0.5f;
+    public float verticalSensitivity = 0.5f;
+    public float surfMinTime = 0.5f;
 
     private Animator warriorAnim;
+    private Rigidbody warriorRb;
     private float forwardSpeed = 0.0f;
     private float horizonSpeed = 0.0f;
+    private float yAngle = 0.0f;
+    private bool onGround = true;
+    private bool inAir = false;
+    private bool jumpTrigger = false;
+    private bool surfTrigger = false;
+    private float surfStart;
 
     private void Start()
     {
         warriorAnim = GetComponent<Animator>();
+        warriorRb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        if (jumpTrigger)
+        {
+            warriorRb.AddForce(upForce * transform.up, ForceMode.Acceleration);
+            jumpTrigger = false;
+            inAir = true;
+        }
+    }
+
     private void Update()
     {
+        if (surfTrigger && Time.time > surfStart + surfMinTime)
+        {
+            warriorAnim.SetTrigger("surfTrigger");
+            inAir = true;
+            surfTrigger = false;
+        }
+
+        yAngle = Input.GetAxis("Mouse X") * verticalSensitivity;
+        transform.Rotate(0.0f, yAngle, 0.0f);
+
         float horizonInput = Input.GetAxis("Horizontal");
         float forwardInput = Input.GetAxis("Vertical");
 
@@ -61,6 +93,65 @@ public class WarriorController : MonoBehaviour
 
         warriorAnim.SetFloat("forwardVelocity", forwardSpeed);
         warriorAnim.SetFloat("horizonVelocity", horizonSpeed);
-        Debug.Log(forwardSpeed.ToString() + " , " + horizonSpeed.ToString());
+
+        if (Input.GetKeyDown(KeyCode.Space) && onGround)
+        {
+            jumpTrigger = true;
+            warriorAnim.SetTrigger("jumpTrigger");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
+        {
+            if (!onGround)
+            {
+                if (inAir)
+                {
+                    warriorAnim.SetTrigger("landTrigger");
+                    inAir = false;
+                }
+                onGround = true;
+            }
+            if (surfTrigger)
+            {
+                surfTrigger = false;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
+        {
+            if (!onGround)
+            {
+                if (inAir)
+                {
+                    warriorAnim.SetTrigger("landTrigger");
+                    inAir = false;
+                }
+                onGround = true;
+            }
+            if (surfTrigger)
+            {
+                surfTrigger = false;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.CompareTag("Floor"))
+        {
+            print("Exit velocity: " + collision.relativeVelocity);
+            if (Vector3.Dot(collision.relativeVelocity, Vector3.up) > Mathf.Epsilon && !surfTrigger)
+            {
+                surfTrigger = true;
+                surfStart = Time.time;
+            }
+            onGround = false;
+        }
     }
 }

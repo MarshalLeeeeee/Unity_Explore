@@ -49,6 +49,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Add ```Animator``` to GameObejct which point to an ```animation controller``` which defines the configuration and transition of meta animations and ```avatar``` which defines the structure, e.g. the bone structure, of the character.
  - We can define animation state and their transitions in Animator Editor. One state is set as default state which serves as the first state when the animation starts.
  - We can blend animation with ```Blend Tree``` which interpolates two or more animations via defined parameter. The specific blending method is defined by ```Blend Type```. In this scene, we blend idle, walk in 4 directions and run forward using ```2D Freeform Directional```. ```2D Freeform Directional``` allows multiple animations in the same direction, e.g. in our case walk forward and run forward, while ```2D Simple Directional``` does not allow such case. ```2D Freeform Cartesian``` is best used when the parameter does not represent the direction. For more details, click [here](https://docs.unity3d.com/Manual/BlendTree-2DBlending.html).
+ - The transition has one attribute - ```Has Exit Time``` which determines if the previous animation plays to an end when the transition condition is satisfied.
  - The controller script can communicate with Animator by first ```GetComponent<Animator>()``` and use methods like ```SetFloat()``` to change the parameters in animator controller.
 
 
@@ -67,6 +68,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - Start(), Update(), ... are ```Event Functions``` in Unity. Running a Unity script executes a number of event functions in a predetermined order, for details click [here](https://docs.unity3d.com/Manual/ExecutionOrder.html). The ```Physics```, which contains ```OnTriggerXXX(), OnCollideXXX(), ...``` is seperated from ```Game Logic```, which contains ```Update(), LateUpdate(), ...```. Therefore, an GameObject with ```RigidBody``` which gives physics can also be affected by ```Update()```. 
    - Invoke a function ```f``` with time delay ```t``` via ```Invoke(f, t)```. If ```t == 0```, just call the function directly. Other invoke related methods are ```InvokeRepeating(f,t,interval)``` which invoking function repeatedly, ```IsInvoking(f)``` which checks if a function is being invoked and ```CancelInvoke()``` which cancel all invokes in this. *(However, for better performance and maintability, use Coroutines instead.)
    - Coroutine combines the function of ```Invoke()``` and ```InvokeRepeating()``` with more flexibility. For instance, ```InvokeRepeating()``` can only repeat the invoke with fixed time interval but Coroutine is able to dynamicaaly change the time interval. ```StartCoroutine(IEnumerator routine)``` directly receives the function call ```routine(...)``` which returns an IEnumerator object in the format ```yield return xxx;```. Specifically, we can yield return ```WaitForSeconds(float timeInterval)``` to allow the coroutine to resume on the first frame after ```timeInterval``` seconds has passed.
+   - ```OnCollisionXXX(Collision collision)``` is invoked whenever there is a collided GameObject. Every ```Collision collision``` corresponds to a specific ```transform```.
 
  - Object: Base class for all objects Unity can reference. Therefore, for static methods, we do not have to explicit write prefix ```Object.```. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Object.html).
    - Every object in unity can transfer to string via ```ToString()```.
@@ -88,7 +90,14 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Rigidbody: Control of an object's position through physics simulation. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Rigidbody.html).
    - Apply force and torque via ```AddForce()```, ```AddTorque()``` where the parameter ```force``` and ```torque``` is in world coordinate or ```AddRelativeForce()```, ```AddRelativeTorque()``` where the parameter ```force``` and ```torque``` is in self coordinate. The second parameter is ```ForceMode```, including ```Force``` which applies the force ```f=m*a```, ```Acceleration``` which applies the acceleration ```a```, ```Impulse``` which applies the impulse ```j=m*dv```, ```VelocityChange``` which applies the diff velocity ```dv```.
 
- - Mathf: A collection of common math functions. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
+ - Collision: Describes a collision with a specific GameObject. For more details, click [here](https://docs.unity3d.com/ScriptReference/Collision.html).
+   - Collision is linked with a specific GameObject. Therefore, the following attribute ```gameObject```, ```relativeVelocity```, ```rigidbody```, ```transform``` is all related to this collided GameObject and ther are all ReadOnly.
+   - However, even if there is only one collided GameObject, there can be multiple contact points. ```contactCount``` tells the number of contact points. ```contacts``` returns an array of ContactPoint. From inside ```OnCollisionStay``` or ```OnCollisionEnter``` you can always be sure that contacts has at least one element. However, avoid directly retrieving ```contacts```, use ```GetContact(int index)``` to get a certain ContactPoint.
+
+ - ContactPoint: Describes a contact point where the collision occurs with property ```normal```, ```point```, ```seperation``` and two colliders - ```thisCollider``` and ```otherCollider```. For more details, click [here](https://docs.unity3d.com/ScriptReference/ContactPoint.html).
+
+ - Animator: Interface to control the Mecanim animation system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Animator.html).
+   - Set parameters in controller by ```SetFloat(), SetInteger(), SetBool(), SetTrigger()``` which corresponds to the four data types in animator controller.
 
  - Input: Interface into the Input system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Input.html).
    - Get the value of the virtual axis via ```Input.GetAxis()``` in continuous field in [-1,1] or ```Input.GetAxisRaw()``` in discrete field in {-1 ,0 ,1}. To set up input or view the options for ```axisName``` via ```Edit / Project Settings / Input Manager```. The options include the trigger event for positive and negative reactions. It is proper for retrieving user's mouse and joystick movement.
@@ -108,5 +117,4 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Debug: Class containing methods to ease debugging while developing. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Debug.html).
    - Print a message at the bottom of game view via ```Log()```.
 
- - Animator: Interface to control the Mecanim animation system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Animator.html).
-   - Set parameters in controller by ```SetFloat(), SetInteger(), SetBool(), SetTrigger()``` which corresponds to the four data types in animator controller.
+ - Mathf: A collection of common math functions. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
