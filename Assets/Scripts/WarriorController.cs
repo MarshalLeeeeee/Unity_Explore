@@ -10,23 +10,33 @@ public class WarriorController : MonoBehaviour
     public float horizonSpeedMax = 2.0f;
     public float upForce = 5.0f;
     public float horizonSensitivity = 0.5f;
+    public float verticalSensitivity = 0.5f;
     public float surfMinTime = 0.5f;
 
     private Animator warriorAnim;
     private Rigidbody warriorRb;
     private float forwardSpeed = 0.0f;
     private float horizonSpeed = 0.0f;
+    private float xAngle = 0.0f;
     private float yAngle = 0.0f;
     private bool onGround = true;
     private bool inAir = false;
+    private float forwardSpeedInAir;
+    private float horizonSpeedInAir;
     private bool jumpTrigger = false;
     private bool surfTrigger = false;
     private float surfStart;
+    private Quaternion initSpineRotation;
+    private Transform rifleTransform;
+    private Transform rightIndexTransform;
 
     private void Start()
     {
         warriorAnim = GetComponent<Animator>();
         warriorRb = GetComponent<Rigidbody>();
+        initSpineRotation = transform.Find("Hips/Spine").localRotation;
+        rifleTransform = transform.Find("Hips/ArmPosition_Right");
+        rightIndexTransform = transform.Find("Hips/Spine/Chest/Shoulder_Right/UpperArm_Right/LowerArm_Right/Hand_Right/Index_Proximal_Right/Index_Intermediate_Right");
     }
 
     private void FixedUpdate()
@@ -36,6 +46,8 @@ public class WarriorController : MonoBehaviour
             warriorRb.AddForce(upForce * transform.up, ForceMode.Acceleration);
             jumpTrigger = false;
             inAir = true;
+            forwardSpeedInAir = forwardSpeed;
+            horizonSpeedInAir = horizonSpeed;
         }
     }
 
@@ -43,11 +55,13 @@ public class WarriorController : MonoBehaviour
     {
         if (surfTrigger && Time.time > surfStart + surfMinTime)
         {
-            warriorAnim.SetTrigger("surfTrigger");
             inAir = true;
+            forwardSpeedInAir = forwardSpeed;
+            horizonSpeedInAir = horizonSpeed;
             surfTrigger = false;
         }
 
+        xAngle += Input.GetAxis("Mouse Y") * verticalSensitivity;
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
 
@@ -89,26 +103,44 @@ public class WarriorController : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
         transform.Translate(Vector3.right * Time.deltaTime * horizonSpeed);
 
-        warriorAnim.SetFloat("zVelocity", forwardSpeed);
-        warriorAnim.SetFloat("xVelocity", horizonSpeed);
-
+        if (inAir)
+        {
+            warriorAnim.SetFloat("zVelocity", forwardSpeedInAir);
+            warriorAnim.SetFloat("xVelocity", horizonSpeedInAir);
+            forwardSpeedInAir *= 0.95f;
+            horizonSpeedInAir *= 0.95f;
+        }
+        else
+        {
+            warriorAnim.SetFloat("zVelocity", forwardSpeed);
+            warriorAnim.SetFloat("xVelocity", horizonSpeed);
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
             jumpTrigger = true;
-            warriorAnim.SetTrigger("jumpTrigger");
         }
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        warriorAnim.SetBoneLocalRotation(HumanBodyBones.Spine, initSpineRotation * Quaternion.Euler(0.0f, 0.0f, Mathf.Clamp(xAngle, -90.0f, 90.0f)));
+    }
+
+    private void LateUpdate()
+    {
+        rifleTransform.Rotate(0.0f, 0.0f, Mathf.Clamp(-xAngle, -90.0f, 90.0f));
+        rifleTransform.position = rightIndexTransform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
         {
-            print(onGround.ToString() + " , " + inAir.ToString());
             if (!onGround)
             {
                 if (inAir)
                 {
-                    warriorAnim.SetTrigger("landTrigger");
                     inAir = false;
                 }
                 onGround = true;
@@ -128,7 +160,6 @@ public class WarriorController : MonoBehaviour
             {
                 if (inAir)
                 {
-                    warriorAnim.SetTrigger("landTrigger");
                     inAir = false;
                 }
                 onGround = true;
