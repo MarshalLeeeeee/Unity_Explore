@@ -8,20 +8,22 @@ public class FollowPlayer : MonoBehaviour
     public float cameraForwardDistance;
     public float cameraUpDistance;
     public float forseenAngle;
-    public bool mouseControl = true;
+    public float verticalSensitivity = 0.5f;
     private float xAngle = 0.0f;
-    private float yAngle = 0.0f;
+    private Vector3 headOffset = new Vector3(0.0f, 1.9f, 0.0f);
 
     // Update is called once per frame
     void Update()
     {
         transform.rotation = player.transform.rotation;
-        transform.position = player.transform.position + cameraForwardDistance * transform.forward + cameraUpDistance * transform.up;
-        if (mouseControl)
-        {
-            xAngle += Input.GetAxis("Mouse Y");
-            yAngle -= Input.GetAxis("Mouse X");
-        }
-        transform.Rotate(xAngle + forseenAngle, yAngle, 0.0f);
+        transform.position = player.transform.position + headOffset;
+        xAngle -= Input.GetAxis("Mouse Y") * verticalSensitivity;
+        transform.Rotate(Mathf.Clamp(xAngle + forseenAngle, -90.0f, 90.0f), 0.0f, 0.0f);
+        transform.position = transform.position + cameraForwardDistance * transform.forward;
+
+
+        //transform.position = player.transform.position + headOffset + cameraForwardDistance * transform.forward + cameraUpDistance * transform.up;
+        //xAngle -= Input.GetAxis("Mouse Y") * verticalSensitivity;
+        //transform.Rotate(Mathf.Clamp(xAngle + forseenAngle, -90.0f, 90.0f), 0.0f, 0.0f);
     }
 }

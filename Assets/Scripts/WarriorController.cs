@@ -9,9 +9,7 @@ public class WarriorController : MonoBehaviour
     public float horizonAcceleration = 0.25f;
     public float horizonSpeedMax = 2.0f;
     public float upForce = 5.0f;
-    public float riseTime = 0.15f;
     public float horizonSensitivity = 0.5f;
-    public float verticalSensitivity = 0.5f;
     public float surfMinTime = 0.5f;
 
     private Animator warriorAnim;
@@ -50,7 +48,7 @@ public class WarriorController : MonoBehaviour
             surfTrigger = false;
         }
 
-        yAngle = Input.GetAxis("Mouse X") * verticalSensitivity;
+        yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
 
         float horizonInput = Input.GetAxis("Horizontal");
@@ -91,8 +89,8 @@ public class WarriorController : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
         transform.Translate(Vector3.right * Time.deltaTime * horizonSpeed);
 
-        warriorAnim.SetFloat("forwardVelocity", forwardSpeed);
-        warriorAnim.SetFloat("horizonVelocity", horizonSpeed);
+        warriorAnim.SetFloat("zVelocity", forwardSpeed);
+        warriorAnim.SetFloat("xVelocity", horizonSpeed);
 
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
@@ -105,6 +103,7 @@ public class WarriorController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
         {
+            print(onGround.ToString() + " , " + inAir.ToString());
             if (!onGround)
             {
                 if (inAir)
@@ -145,7 +144,6 @@ public class WarriorController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Floor"))
         {
-            print("Exit velocity: " + collision.relativeVelocity);
             if (Vector3.Dot(collision.relativeVelocity, Vector3.up) > Mathf.Epsilon && !surfTrigger)
             {
                 surfTrigger = true;
