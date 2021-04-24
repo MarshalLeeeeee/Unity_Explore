@@ -94,6 +94,11 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Rigidbody: Control of an object's position through physics simulation. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Rigidbody.html).
    - Apply force and torque via ```AddForce()```, ```AddTorque()``` where the parameter ```force``` and ```torque``` is in world coordinate or ```AddRelativeForce()```, ```AddRelativeTorque()``` where the parameter ```force``` and ```torque``` is in self coordinate. The second parameter is ```ForceMode```, including ```Force``` which applies the force ```f=m*a```, ```Acceleration``` which applies the acceleration ```a```, ```Impulse``` which applies the impulse ```j=m*dv```, ```VelocityChange``` which applies the diff velocity ```dv```.
 
+ - Physics: Global physics properties and helper methods. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Physics.html).
+   - Simulate a ray in the scene for collision detection. ```Raycast(...)``` returns true when the ray intersects any collider, otherwise false. ```Raycast(...)``` has several signatures and those that has parameter ```out RaycastHit hitInfo``` can store more information about where the closest collider was hit. 
+
+ - RaycastHit: Structure used to get information back from a raycast. For more detailed API, click [here](https://docs.unity3d.com/ScriptReference/RaycastHit.html).
+
  - Collision: Describes a collision with a specific GameObject. For more details, click [here](https://docs.unity3d.com/ScriptReference/Collision.html).
    - Collision is linked with a specific GameObject. Therefore, the following attribute ```gameObject```, ```relativeVelocity```, ```rigidbody```, ```transform``` is all related to this collided GameObject and ther are all ReadOnly.
    - However, even if there is only one collided GameObject, there can be multiple contact points. ```contactCount``` tells the number of contact points. ```contacts``` returns an array of ContactPoint. From inside ```OnCollisionStay``` or ```OnCollisionEnter``` you can always be sure that contacts has at least one element. However, avoid directly retrieving ```contacts```, use ```GetContact(int index)``` to get a certain ContactPoint.

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WarriorController : MonoBehaviour
 {
+    public GameObject bullet;
     public float forwardAcceleration = 1.0f;
     public float forwardSpeedMax = 10.0f;
     public float horizonAcceleration = 0.25f;
@@ -12,7 +13,11 @@ public class WarriorController : MonoBehaviour
     public float horizonSensitivity = 0.5f;
     public float verticalSensitivity = 0.5f;
     public float surfMinTime = 0.5f;
+    public float shootInterval = 0.5f;
 
+    private bool shootMode = true;
+    private float shootTime = -1.0f;
+    private bool inSemiShoot = false;
     private Animator warriorAnim;
     private Rigidbody warriorRb;
     private float forwardSpeed = 0.0f;
@@ -53,6 +58,7 @@ public class WarriorController : MonoBehaviour
 
     private void Update()
     {
+        // surf detector
         if (surfTrigger && Time.time > surfStart + surfMinTime)
         {
             inAir = true;
@@ -61,6 +67,7 @@ public class WarriorController : MonoBehaviour
             surfTrigger = false;
         }
 
+        // mouse movement
         xAngle += Input.GetAxis("Mouse Y") * verticalSensitivity;
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
@@ -68,6 +75,7 @@ public class WarriorController : MonoBehaviour
         float horizonInput = Input.GetAxis("Horizontal");
         float forwardInput = Input.GetAxis("Vertical");
 
+        // forward control
         if (forwardInput != 0.0f) forwardSpeed += Time.deltaTime * forwardAcceleration * forwardInput;
         else
         {
@@ -84,6 +92,7 @@ public class WarriorController : MonoBehaviour
         }
         forwardSpeed = Mathf.Clamp(forwardSpeed, -horizonSpeedMax, forwardSpeedMax);
 
+        // horizon control
         if (horizonInput != 0.0f) horizonSpeed += Time.deltaTime * horizonAcceleration * horizonInput;
         else
         {
@@ -103,6 +112,7 @@ public class WarriorController : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
         transform.Translate(Vector3.right * Time.deltaTime * horizonSpeed);
 
+        // inAir animation pose control
         if (inAir)
         {
             warriorAnim.SetFloat("zVelocity", forwardSpeedInAir);
@@ -116,9 +126,42 @@ public class WarriorController : MonoBehaviour
             warriorAnim.SetFloat("xVelocity", horizonSpeed);
         }
         
+        // jump
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
             jumpTrigger = true;
+        }
+
+        // shoot
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (shootMode) shootMode = false;
+            else shootMode = true;
+        }
+        if (shootMode)
+        {
+            if (Input.GetMouseButtonDown(0) && (Time.time >= shootTime + shootInterval))
+            {
+                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f,0.0f,135.0f));
+                shootTime = Time.time;
+                inSemiShoot = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                inSemiShoot = false;
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButton(0) && (Time.time >= shootTime + shootInterval) && !inSemiShoot)
+            {
+                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f));
+                shootTime = Time.time;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                inSemiShoot = false;
+            }
         }
     }
 

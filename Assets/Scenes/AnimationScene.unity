@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d289f24b78c732944a2e5fad54e8e54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 7689971174682773123, guid: 7146cad891356c94ca6e92bd0e387d7a, type: 3}
   forwardAcceleration: 10
   forwardSpeedMax: 10
   horizonAcceleration: 5
@@ -292,6 +293,7 @@ MonoBehaviour:
   horizonSensitivity: 0.5
   verticalSensitivity: 0.2
   surfMinTime: 0.5
+  shootInterval: 0.1
 --- !u!1 &1378984359
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: 044e83a0db59cb04cbc1098f893a92eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: 044e83a0db59cb04cbc1098f893a92eb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -605,6 +607,7 @@ GameObject:
   - component: {fileID: 1687258583}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258587}
+  - component: {fileID: 1687258588}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -762,10 +765,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1359742798}
-  cameraForwardDistance: -1
-  cameraUpDistance: 0
-  forseenAngle: 5
+  cameraForwardDistance: -1.5
+  cameraUpDistance: 0.5
+  forseenAngle: 0
   verticalSensitivity: 0.2
+--- !u!114 &1687258588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8942d0d5566f9bc4c938a6c21e93c552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0

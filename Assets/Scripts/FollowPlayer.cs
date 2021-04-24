@@ -10,12 +10,6 @@ public class FollowPlayer : MonoBehaviour
     public float forseenAngle;
     public float verticalSensitivity = 0.5f;
     private float xAngle = 0.0f;
-    private Vector3 headOffset = new Vector3(0.0f, 1.9f, 0.0f);
-
-    private void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -24,6 +18,6 @@ public class FollowPlayer : MonoBehaviour
         transform.position = player.transform.Find("Hips/Spine/Chest/Neck/Head").position;
         xAngle -= Input.GetAxis("Mouse Y") * verticalSensitivity;
         transform.Rotate(Mathf.Clamp(xAngle + forseenAngle, -90.0f, 90.0f), 0.0f, 0.0f);
-        transform.position = transform.position + cameraForwardDistance * transform.forward;
+        transform.position = transform.position + cameraForwardDistance * transform.forward + cameraUpDistance * transform.up;
     }
 }
