@@ -34,6 +34,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 ### AudioScene
  - The sound of the scene is listened by ```Audio Listener```. There could be one and only one ```Audio Listener``` in the scene. By default, it is within the ```Main Camera```.
  - Attach a sound affect to a game object via ```Add Component / Audio Source```. Select the sound file in ```AudioClip```. Mark ```Loop``` for continuous play'''. 2D / 3D effect is controlled by ```Spatial Blend```. In ```3D Sound Settings```, we can activate ```Doppler Level``` and customize the ```Volume Rolloff```, which reflects the relationship between distance and ratio of volume.
+ - ```AudioClip``` is the variable type of sound file.
 
 
 ### InteractionScene
@@ -108,6 +109,12 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Animator: Interface to control the Mecanim animation system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Animator.html).
    - Set parameters in controller by ```SetFloat(), SetInteger(), SetBool(), SetTrigger()``` which corresponds to the four data types in animator controller.
    - We can rotate the bone and its child joint by ```SetBoneLocalRotation(HumanBodyBones humanBoneId, Quaternion rotation)```. ```HumanBodyBones``` provides enums for predefined joint in humanoid avatar, for more details, click [here](https://docs.unity3d.com/ScriptReference/HumanBodyBones.html). ```rotation``` is measured in local coordinate, which is equalavent to what we get by ```transform.localRotation```.
+
+ - AudioSource: A representation of audio sources in 3D. For more details, click [here](https://docs.unity3d.com/ScriptReference/AudioSource.html).
+   - The default clip is saved in ```clip```. The volume is saved in ```volume```. If loop is saved in ```loop```.
+   - We can ```Play()``` / ```Pause()``` / ```UnPause()``` / ```Stop()``` the AudioClip saved in ```clip```.
+   - Play the clip with a delayed time via ```PlayDelayed(float second)```
+   - Play a temporary clip via ```PlayOneShot(AudioClip clip, float volumeScale = 1.0F)```, it is not looped. After the clip is over, the default clip is resumed.
 
  - Input: Interface into the Input system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Input.html).
    - Get the value of the virtual axis via ```Input.GetAxis()``` in continuous field in [-1,1] or ```Input.GetAxisRaw()``` in discrete field in {-1 ,0 ,1}. To set up input or view the options for ```axisName``` via ```Edit / Project Settings / Input Manager```. The options include the trigger event for positive and negative reactions. It is proper for retrieving user's mouse and joystick movement.

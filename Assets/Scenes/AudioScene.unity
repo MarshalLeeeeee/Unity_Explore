@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.094287336, g: 0.061026484, b: 0.15383239, a: 1}
+  m_IndirectSpecularColor: {r: 0.14161564, g: 0.090962745, b: 0.17872117, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 1803744568}
   - component: {fileID: 1803744567}
   - component: {fileID: 1803744566}
+  - component: {fileID: 1803744571}
   - component: {fileID: 1803744570}
   m_Layer: 0
   m_Name: MotorBall
@@ -330,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_dt: 0.01
   rx: 2
-  rz: 10
+  rz: 20
 --- !u!135 &1803744567
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -516,6 +517,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1803744571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803744564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16173de96e3f8cd44a114216b3fc78c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crashSound: {fileID: 8300000, guid: 0e3c72025c99e3542a43b9d685e310d9, type: 3}
+  newSound: {fileID: 8300000, guid: e5a8854e1f25b8a44b6eac8c95cc3b38, type: 3}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0
