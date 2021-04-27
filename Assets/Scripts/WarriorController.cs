@@ -96,7 +96,6 @@ public class WarriorController : MonoBehaviour
 
         // mouse movement
         xAngle += Input.GetAxis("Mouse Y") * verticalSensitivity;
-        dXAngle = Input.GetAxis("Mouse Y") * verticalSensitivity;
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
 
