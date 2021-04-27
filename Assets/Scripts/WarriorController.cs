@@ -45,19 +45,30 @@ public class WarriorController : MonoBehaviour
     private Rigidbody warriorRb;
     private Quaternion initSpineRotation;
     private Transform rifleTransform;
-    private Transform rightIndexTransform;
+    private Transform spineTransform;
+    private Vector3 rifleToSpinePos;
+    private Quaternion rifleToSpineRotation;
 
     private void Start()
     {
         warriorAnim = GetComponent<Animator>();
         warriorRb = GetComponent<Rigidbody>();
-        initSpineRotation = transform.Find("Hips/Spine").localRotation;
-        rifleTransform = transform.Find("Hips/ArmPosition_Right");
-        rightIndexTransform = transform.Find("Hips/Spine/Chest/Shoulder_Right/UpperArm_Right/LowerArm_Right/Hand_Right/Index_Proximal_Right/Index_Intermediate_Right");
         warriorAnim.SetFloat("singleShootProp", 0.3f);
         warriorAnim.SetFloat("autoShootProp", 0.3f);
         warriorAnim.SetFloat("reloadProp", 0.3f);
         currentMagSize = magSize;
+        StartCoroutine(getInitPose());
+    }
+
+    IEnumerator getInitPose()
+    {
+        initSpineRotation = transform.Find("Hips/Spine").localRotation;
+        yield return new WaitForSeconds(Time.deltaTime);
+        rifleTransform = transform.Find("Hips/ArmPosition_Right");
+        spineTransform = transform.Find("Hips/Spine");
+        rifleToSpinePos = spineTransform.worldToLocalMatrix.MultiplyPoint3x4(rifleTransform.position);
+        rifleToSpineRotation = Quaternion.Inverse(spineTransform.rotation) * rifleTransform.rotation;
+        yield return null;
     }
 
     private void FixedUpdate()
@@ -85,6 +96,7 @@ public class WarriorController : MonoBehaviour
 
         // mouse movement
         xAngle += Input.GetAxis("Mouse Y") * verticalSensitivity;
+        dXAngle = Input.GetAxis("Mouse Y") * verticalSensitivity;
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
 
@@ -199,15 +211,18 @@ public class WarriorController : MonoBehaviour
         }
     }
 
-    private void OnAnimatorIK(int layerIndex)
-    {
-        warriorAnim.SetBoneLocalRotation(HumanBodyBones.Spine, initSpineRotation * Quaternion.Euler(0.0f, 0.0f, Mathf.Clamp(xAngle, -90.0f, 90.0f)));
-    }
-
     private void LateUpdate()
     {
-        rifleTransform.Rotate(0.0f, 0.0f, Mathf.Clamp(-xAngle, -90.0f, 90.0f));
-        rifleTransform.position = rightIndexTransform.position;
+        if (spineTransform)
+        {
+            spineTransform.RotateAround(spineTransform.position, transform.right, -xAngle);
+        }
+        if (rifleTransform)
+        {
+            rifleTransform.position = spineTransform.localToWorldMatrix.MultiplyPoint3x4(rifleToSpinePos);
+            rifleTransform.rotation = spineTransform.rotation * rifleToSpineRotation;
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
