@@ -293,7 +293,10 @@ MonoBehaviour:
   horizonSensitivity: 0.5
   verticalSensitivity: 0.2
   surfMinTime: 0.5
-  shootInterval: 0.5
+  singleShootInterval: 0.5
+  autoShootInterval: 0.1
+  reloadTime: 2.667
+  magSize: 30
 --- !u!1 &1378984359
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,9 +768,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1359742798}
-  cameraForwardDistance: -1.5
-  cameraUpDistance: 0.5
-  forseenAngle: 10
+  cameraForwardDistance: -2
+  cameraUpDistance: 1
+  forseenAngle: 20
   verticalSensitivity: 0.2
 --- !u!114 &1687258588
 MonoBehaviour:

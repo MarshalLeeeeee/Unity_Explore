@@ -186,7 +186,6 @@ public class WarriorController : MonoBehaviour
         }
 
         // reload
-        Debug.Log(currentMagSize);
         if (((Input.GetKeyDown(KeyCode.R) && currentMagSize < magSize) || (currentMagSize == 0)) && !inReloading)
         {
             inReloading = true;
