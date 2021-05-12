@@ -11,7 +11,6 @@ public class WarriorController : MonoBehaviour
     public float horizonSpeedMax = 2.0f;
     public float upForce = 5.0f;
     public float horizonSensitivity = 0.5f;
-    public float verticalSensitivity = 0.5f;
     public float surfMinTime = 0.5f;
     public float singleShootInterval = 0.5f;
     public float autoShootInterval = 0.1f;
@@ -20,7 +19,6 @@ public class WarriorController : MonoBehaviour
     
     private float forwardSpeed = 0.0f;
     private float horizonSpeed = 0.0f;
-    private float xAngle = 0.0f;
     private float yAngle = 0.0f;
 
     private bool onGround = true;
@@ -43,11 +41,12 @@ public class WarriorController : MonoBehaviour
 
     private Animator warriorAnim;
     private Rigidbody warriorRb;
-    private Quaternion initSpineRotation;
     private Transform rifleTransform;
     private Transform spineTransform;
     private Vector3 rifleToSpinePos;
     private Quaternion rifleToSpineRotation;
+    private Quaternion standingPlaneRotation;
+    private FollowPlayer fp;
 
     private void Start()
     {
@@ -58,11 +57,12 @@ public class WarriorController : MonoBehaviour
         warriorAnim.SetFloat("reloadProp", 0.3f);
         currentMagSize = magSize;
         StartCoroutine(getInitPose());
+        standingPlaneRotation = Quaternion.FromToRotation(Vector3.up, Vector3.up);
+        fp = FindObjectOfType<FollowPlayer>();
     }
 
     IEnumerator getInitPose()
     {
-        initSpineRotation = transform.Find("Hips/Spine").localRotation;
         yield return new WaitForSeconds(Time.deltaTime);
         rifleTransform = transform.Find("Hips/ArmPosition_Right");
         spineTransform = transform.Find("Hips/Spine");
@@ -95,14 +95,14 @@ public class WarriorController : MonoBehaviour
         }
 
         // mouse movement
-        xAngle += Input.GetAxis("Mouse Y") * verticalSensitivity;
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
+        Debug.Log(yAngle);
 
         float horizonInput = Input.GetAxis("Horizontal");
         float forwardInput = Input.GetAxis("Vertical");
 
-        // forward control
+        // forward speed control
         if (forwardInput != 0.0f) forwardSpeed += Time.deltaTime * forwardAcceleration * forwardInput;
         else
         {
@@ -119,7 +119,7 @@ public class WarriorController : MonoBehaviour
         }
         forwardSpeed = Mathf.Clamp(forwardSpeed, -horizonSpeedMax, forwardSpeedMax);
 
-        // horizon control
+        // horizon speed control
         if (horizonInput != 0.0f) horizonSpeed += Time.deltaTime * horizonAcceleration * horizonInput;
         else
         {
@@ -136,8 +136,11 @@ public class WarriorController : MonoBehaviour
         }
         horizonSpeed = Mathf.Clamp(horizonSpeed, -horizonSpeedMax, horizonSpeedMax);
 
-        transform.Translate(Vector3.forward * Time.deltaTime * forwardSpeed);
-        transform.Translate(Vector3.right * Time.deltaTime * horizonSpeed);
+        Matrix4x4 planeRotationMatrix = Matrix4x4.Rotate(standingPlaneRotation);
+        Vector3 forwardDirection = planeRotationMatrix.MultiplyPoint3x4(transform.forward);
+        Vector3 rightDirection = planeRotationMatrix.MultiplyPoint3x4(transform.right);
+        transform.Translate(forwardDirection * Time.deltaTime * forwardSpeed, Space.World);
+        transform.Translate(rightDirection * Time.deltaTime * horizonSpeed, Space.World);
 
         // inAir animation pose control
         if (inAir)
@@ -208,13 +211,15 @@ public class WarriorController : MonoBehaviour
             inReloading = false;
             currentMagSize = magSize;
         }
+
+        
     }
 
     private void LateUpdate()
     {
         if (spineTransform)
         {
-            spineTransform.RotateAround(spineTransform.position, transform.right, -xAngle);
+            spineTransform.RotateAround(spineTransform.position, transform.right, fp.getPoseXAngle());
         }
         if (rifleTransform)
         {
@@ -224,28 +229,9 @@ public class WarriorController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
-        {
-            if (!onGround)
-            {
-                if (inAir)
-                {
-                    inAir = false;
-                }
-                onGround = true;
-            }
-            if (surfTrigger)
-            {
-                surfTrigger = false;
-            }
-        }
-    }
-
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.CompareTag("Floor") && collision.contacts[0].normal.normalized == Vector3.up)
+        if (collision.transform.CompareTag("Floor") && isStanding(collision))
         {
             if (!onGround)
             {
@@ -259,6 +245,7 @@ public class WarriorController : MonoBehaviour
             {
                 surfTrigger = false;
             }
+            standingPlaneRotation = Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal.normalized);
         }
     }
 
@@ -273,5 +260,10 @@ public class WarriorController : MonoBehaviour
             }
             onGround = false;
         }
+    }
+
+    private bool isStanding(Collision collision)
+    {
+        return Mathf.Abs(Vector3.Dot(collision.contacts[0].normal.normalized, Vector3.up)) >= Mathf.Sqrt(3.0f) * 0.5f;
     }
 }

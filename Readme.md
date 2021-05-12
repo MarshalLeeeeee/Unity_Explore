@@ -108,7 +108,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - Collision is linked with a specific GameObject. Therefore, the following attribute ```gameObject```, ```relativeVelocity```, ```rigidbody```, ```transform``` is all related to this collided GameObject and ther are all ReadOnly.
    - However, even if there is only one collided GameObject, there can be multiple contact points. ```contactCount``` tells the number of contact points. ```contacts``` returns an array of ContactPoint. From inside ```OnCollisionStay``` or ```OnCollisionEnter``` you can always be sure that contacts has at least one element. However, avoid directly retrieving ```contacts```, use ```GetContact(int index)``` to get a certain ContactPoint.
 
- - ContactPoint: Describes a contact point where the collision occurs with property ```normal```, ```point```, ```seperation``` and two colliders - ```thisCollider``` and ```otherCollider```. For more details, click [here](https://docs.unity3d.com/ScriptReference/ContactPoint.html).
+ - ContactPoint: Describes a contact point where the collision occurs with property ```normal```, ```point```, ```seperation``` and two colliders - ```thisCollider``` and ```otherCollider```. ```normal``` and ```point``` are described in world coordinate. For more details, click [here](https://docs.unity3d.com/ScriptReference/ContactPoint.html).
 
  - Animator: Interface to control the Mecanim animation system. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Animator.html).
    - Set parameters in controller by ```SetFloat(), SetInteger(), SetBool(), SetTrigger()``` which corresponds to the four data types in animator controller.
