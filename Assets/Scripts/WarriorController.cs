@@ -57,7 +57,7 @@ public class WarriorController : MonoBehaviour
         warriorAnim.SetFloat("reloadProp", 0.3f);
         currentMagSize = magSize;
         StartCoroutine(getInitPose());
-        standingPlaneRotation = Quaternion.FromToRotation(Vector3.up, Vector3.up);
+        standingPlaneRotation = Quaternion.identity;
         fp = FindObjectOfType<FollowPlayer>();
     }
 
@@ -259,6 +259,7 @@ public class WarriorController : MonoBehaviour
                 surfStart = Time.time;
             }
             onGround = false;
+            standingPlaneRotation = Quaternion.identity;
         }
     }
 
