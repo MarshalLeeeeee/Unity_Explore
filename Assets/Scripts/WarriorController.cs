@@ -50,6 +50,7 @@ public class WarriorController : MonoBehaviour
     private Quaternion standingPlaneRotation;
     private FollowPlayer fp;
     private WarriorSoundController soundController;
+    private RifleSoundController rifleSoundController;
 
     private void Start()
     {
@@ -63,6 +64,7 @@ public class WarriorController : MonoBehaviour
         StartCoroutine(getInitPose());
         standingPlaneRotation = Quaternion.identity;
         fp = FindObjectOfType<FollowPlayer>();
+        rifleSoundController = FindObjectOfType<RifleSoundController>();
     }
 
     IEnumerator getInitPose()
@@ -244,6 +246,7 @@ public class WarriorController : MonoBehaviour
             inReloading = true;
             reloadStart = Time.time;
             warriorAnim.SetTrigger("reloadTrigger");
+            rifleSoundController.reload();
         }
         if (inReloading && Time.time > reloadStart + reloadTime)
         {
