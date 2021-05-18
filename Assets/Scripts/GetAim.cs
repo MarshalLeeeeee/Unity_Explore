@@ -18,10 +18,11 @@ public class GetAim : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(new Ray(transform.position, transform.forward), out hit, maxDistance))
+            if (Physics.Raycast(new Ray(transform.position + transform.forward * 2.0f, transform.forward), out hit, maxDistance))
             {
                 isHit = true;
             }
+            else isHit = false;
         }
     }
 

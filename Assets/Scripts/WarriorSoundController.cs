@@ -15,20 +15,17 @@ public class WarriorSoundController : MonoBehaviour
 
     public void still()
     {
-        Debug.Log("still or onGround");
         audioSource.Stop();
     }
 
     public void walk()
     {
-        Debug.Log("walk");
         audioSource.clip = walkSound;
         audioSource.Play();
     }
 
     public void run()
     {
-        Debug.Log("run");
         audioSource.clip = runSound;
         audioSource.Play();
     }

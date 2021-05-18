@@ -174,8 +174,6 @@ public class WarriorController : MonoBehaviour
         }
         groundSpeedPrev = groundSpeed;
 
-
-
         // translate
         Matrix4x4 planeRotationMatrix = Matrix4x4.Rotate(standingPlaneRotation);
         Vector3 forwardDirection = planeRotationMatrix.MultiplyPoint3x4(transform.forward);
@@ -213,7 +211,7 @@ public class WarriorController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
-                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f,0.0f,135.0f));
+                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f,0.0f,135.0f), transform);
                 currentMagSize -= 1;
                 shootStart = Time.time;
                 inSemiShoot = true;
@@ -228,7 +226,7 @@ public class WarriorController : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
-                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f));
+                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f), transform);
                 currentMagSize -= 1;
                 shootStart = Time.time;
                 warriorAnim.SetBool("autoShootFlag", true);
