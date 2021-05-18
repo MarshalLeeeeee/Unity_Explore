@@ -18,7 +18,9 @@ public class WarriorController : MonoBehaviour
     public int magSize = 30;
     
     private float forwardSpeed = 0.0f;
-    private float horizonSpeed = 0.0f;
+    private float horizonSpeed = 0.0f; 
+    private float groundSpeed = 0.0f;
+    private float groundSpeedPrev = 0.0f;
     private float yAngle = 0.0f;
 
     private bool onGround = true;
@@ -47,11 +49,13 @@ public class WarriorController : MonoBehaviour
     private Quaternion rifleToSpineRotation;
     private Quaternion standingPlaneRotation;
     private FollowPlayer fp;
+    private WarriorSoundController soundController;
 
     private void Start()
     {
         warriorAnim = GetComponent<Animator>();
         warriorRb = GetComponent<Rigidbody>();
+        soundController = GetComponent<WarriorSoundController>();
         warriorAnim.SetFloat("singleShootProp", 0.3f);
         warriorAnim.SetFloat("autoShootProp", 0.3f);
         warriorAnim.SetFloat("reloadProp", 0.3f);
@@ -97,7 +101,6 @@ public class WarriorController : MonoBehaviour
         // mouse movement
         yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
-        Debug.Log(yAngle);
 
         float horizonInput = Input.GetAxis("Horizontal");
         float forwardInput = Input.GetAxis("Vertical");
@@ -136,6 +139,44 @@ public class WarriorController : MonoBehaviour
         }
         horizonSpeed = Mathf.Clamp(horizonSpeed, -horizonSpeedMax, horizonSpeedMax);
 
+        // play sound
+        if (onGround) groundSpeed = Mathf.Sqrt(Mathf.Pow(forwardSpeed, 2.0f) + Mathf.Pow(horizonSpeed, 2.0f));
+        else groundSpeed = 0.0f;
+        if (groundSpeedPrev <= Mathf.Epsilon && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon)
+        {
+            // still ground speed to run
+            soundController.run();
+        }
+        else if (groundSpeedPrev <= Mathf.Epsilon && groundSpeed > Mathf.Epsilon)
+        {
+            // still ground speed to walk
+            soundController.walk();
+        }
+        else if (groundSpeedPrev <= horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon)
+        {
+            // walk to run
+            soundController.run();
+        }
+        else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon && groundSpeed <= Mathf.Epsilon)
+        {
+            // run to still
+            soundController.still();
+        }
+        else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon && groundSpeed <= horizonSpeedMax * Mathf.Sqrt(2.0f) + Mathf.Epsilon)
+        {
+            // run to walk
+            soundController.walk();
+        }
+        else if (groundSpeedPrev > Mathf.Epsilon && groundSpeed <= Mathf.Epsilon)
+        {
+            // walk to still
+            soundController.still();
+        }
+        groundSpeedPrev = groundSpeed;
+
+
+
+        // translate
         Matrix4x4 planeRotationMatrix = Matrix4x4.Rotate(standingPlaneRotation);
         Vector3 forwardDirection = planeRotationMatrix.MultiplyPoint3x4(transform.forward);
         Vector3 rightDirection = planeRotationMatrix.MultiplyPoint3x4(transform.right);

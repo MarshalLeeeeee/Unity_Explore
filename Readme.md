@@ -6,7 +6,7 @@ The exploration is led by scene.
 Scenes are categoried by the big part in Unity. Every scene includes the features of the specific part. 
 
 ### MeshBasicScene
- - Change the skybox (mat) via ```Window / Rendering / Lighting / Environment```.
+ - Change the skybox (mat) via ```Window / Rendering / Lighting / Environment```. We can also set the fog effect there.
  - Create simple 3d mesh via ```+ / 3D Objects```. 
  - Adjust mesh position, rotation, scale in Inspector View or directly in the scene view. Via ```holding Ctrl```, we can move the object by grid.
  - Load material via dragging. If the surface type is ```Transparent```, we can set the alpha channel to have transparent effect of mesh.
