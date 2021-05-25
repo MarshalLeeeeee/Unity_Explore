@@ -9,6 +9,7 @@ public class FollowPlayer : MonoBehaviour
     public float cameraUpDistance;
     public float forseenAngle;
     public float verticalSensitivity = 0.5f;
+    public float recoilAngle = 10.0f;
     private float xAngle;
 
     private void Start()
@@ -30,5 +31,11 @@ public class FollowPlayer : MonoBehaviour
     public float getPoseXAngle()
     {
         return xAngle - forseenAngle;
+    }
+
+    public void recoil()
+    {
+        xAngle -= recoilAngle;
+        xAngle = Mathf.Clamp(xAngle, -90.0f, 90.0f);
     }
 }
