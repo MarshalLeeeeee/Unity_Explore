@@ -6,13 +6,12 @@ public class WarriorController : MonoBehaviour
 {
     
     public float forwardAcceleration = 1.0f;
+    public float horizonAcceleration = 0.25f;
     public float forwardSpeedMax = 10.0f;
     public float backwardSpeedMax = 10.0f;
-    public float horizonAcceleration = 0.25f;
     public float horizonSpeedMax = 2.0f;
     public float upForce = 5.0f;
     public float horizonSensitivity = 0.5f;
-    public float surfMinTime = 0.5f;
 
     Matrix4x4 planeRotationMatrix; // local coordinate to surface coordinate
     private Quaternion standingPlaneRotation; // local coordinate to surface coordinate
@@ -73,8 +72,8 @@ public class WarriorController : MonoBehaviour
         velocityLocal = Matrix4x4.Rotate(Quaternion.FromToRotation(transform.forward, Vector3.forward)).MultiplyPoint3x4(velocity);
         velocityLocal = planeRotationMatrix.inverse.MultiplyPoint3x4(velocityLocal);
 
-        warriorRb.AddForce(forwardVelocity, ForceMode.Acceleration);
-        warriorRb.AddForce(horizonVelocity, ForceMode.Acceleration);
+        warriorRb.AddForce(forwardVelocity, ForceMode.Force);
+        warriorRb.AddForce(horizonVelocity, ForceMode.Force);
         velocityLocal = new Vector3(Mathf.Clamp(velocityLocal.x, -horizonSpeedMax, horizonSpeedMax), velocityLocal.y, Mathf.Clamp(velocityLocal.z, -backwardSpeedMax, forwardSpeedMax));
         velocity = Matrix4x4.Rotate(Quaternion.FromToRotation(Vector3.forward, transform.forward)).MultiplyPoint3x4(planeRotationMatrix.MultiplyPoint3x4(velocityLocal));
         warriorRb.velocity = velocity;
@@ -84,7 +83,7 @@ public class WarriorController : MonoBehaviour
 
         if (jumpTrigger)
         {
-            warriorRb.AddForce(upForce * transform.up, ForceMode.Acceleration);
+            warriorRb.AddForce(upForce * transform.up, ForceMode.Impulse);
             jumpTrigger = false;
         }
     }

@@ -9,9 +9,6 @@ public class UncollideFeedback : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.rigidbody != null)
-        {
-            Debug.Log(collision.GetContact(0).normal.ToString());
-            collision.rigidbody.AddForce(-collision.GetContact(0).normal * collisionForce, ForceMode.Acceleration);
-        }
+            collision.rigidbody.AddForce(-collision.GetContact(0).normal * collisionForce, ForceMode.Impulse);
     }
 }

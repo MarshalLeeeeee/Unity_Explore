@@ -21,6 +21,7 @@ public class WarriorShootController : MonoBehaviour
     private Animator warriorAnim;
     private Transform rifleTransform;
     private RifleSoundController rifleSoundController;
+    private FollowPlayer fp;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class WarriorShootController : MonoBehaviour
         warriorAnim.SetFloat("reloadProp", 0.3f);
         rifleSoundController = FindObjectOfType<RifleSoundController>();
         currentMagSize = magSize;
+        fp = FindObjectOfType<FollowPlayer>();
     }
 
     // Update is called once per frame
@@ -48,6 +50,7 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
                 Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f), transform);
+                fp.recoil();
                 currentMagSize -= 1;
                 shootStart = Time.time;
                 inSemiShoot = true;
@@ -63,6 +66,7 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
                 Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f), transform);
+                fp.recoil();
                 currentMagSize -= 1;
                 shootStart = Time.time;
                 warriorAnim.SetBool("autoShootFlag", true);
