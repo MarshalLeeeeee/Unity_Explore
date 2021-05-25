@@ -25,6 +25,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Create a new material via ```right clicking parent folder in project view / Create / Material```.
  - Load texture image via ```dragging the target image to Base Map```. The albedo color still affects. 
  - ```Physic Material``` can be added to GameObject on its collider material, which is used to adjust friction and bouncing effects of colliding objects. For more details, click[here](https://docs.unity3d.com/Manual/class-PhysicMaterial.html). ```Friction``` reflects to coefficient of friction, ```[0,1]```, which is further classified as ```static friction``` and ```dynamic friction```. ```Bounciness``` reflects to bouncy, ```[0,1]```. Both parameter has mode of ```Combine```, which defines how the parameter of the two colliders are combined. The combination priority is ```Average < Minimum < Multiply < Maximum```. The default setup for ```Physic Material = None``` is the default initialized setup.
+ - We can get the material of the gameObject by ```GetComponent<Renderer>().material```.
 
 
 ### LightingScene
@@ -124,6 +125,9 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - Get the value of the virtual axis via ```Input.GetAxis()``` in continuous field in [-1,1] or ```Input.GetAxisRaw()``` in discrete field in {-1 ,0 ,1}. To set up input or view the options for ```axisName``` via ```Edit / Project Settings / Input Manager```. The options include the trigger event for positive and negative reactions. It is proper for retrieving user's mouse and joystick movement.
    - Get specific key interaction, including keyboard, mouse and joystick, via ```GetKeyDown(...)``` which detects if the user starts pressing one key down, ```GetKey(...)``` which detects if the user keeps holding one key down, ```GetKeyUp(...)``` which detects if the user starts releasing one key up. This brings more flexifibility than the previous introduced virtual axis.
    - Gey specific mouse interaction via ```GetMouseButtonDown(...)``` which detects if the user starts pressing one mouse button down, ```GetMouseButton(...)``` which detects if the user keeps holding one mouse button down, ```GetMouseButtonUp(...)``` which detects if the user starts releasing one mouse button up. This is equivalent to ```GetKeyXXX()``` whose parameter is ```KeyCode.MouseX```. 
+
+ - Material: Describe the property of material. We can get the material of a gameObject by ```Renderer.material``` For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Material.html).
+   - Get the attribute of texture by ```mainTexture, mainTextureOffset, mainTextureScale```. These properties can be read as well as modified.
 
  - KeyCode: Key codes that map to physical key, including keyboard, mouse and joystick. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/KeyCode.html).
 
