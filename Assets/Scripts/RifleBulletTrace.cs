@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class RifleBulletTrace : MonoBehaviour
 {
-    public float speed = 40.0f;
+    public float impluse = 100.0f;
     public float maxDestroyTime = 10.0f;
     private GetAim getAim;
     private Vector3 hitPoint;
     private bool hasAim = false;
     private string shooterTag;
+    private Rigidbody rb;
 
     private void Start()
     {
@@ -22,13 +23,9 @@ public class RifleBulletTrace : MonoBehaviour
             Vector3 toDirection = (hitPoint - transform.position).normalized;
             transform.rotation = transform.rotation * Quaternion.FromToRotation(transform.up, toDirection);
         }
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(transform.up * impluse, ForceMode.Impulse);
         Destroy(gameObject, maxDestroyTime);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(Vector3.up * Time.deltaTime * speed);
     }
 
     private void OnTriggerEnter(Collider other)
