@@ -131,6 +131,7 @@ MonoBehaviour:
   maxDestroyTime: 10
   bouncePad: {fileID: 6335659226511637200, guid: a0dfa243f1ce71c41982d8c5c516d98b, type: 3}
   throughPad: {fileID: 7005183098088986430, guid: def92c1a958db254cbb3d088f623a162, type: 3}
+  bulletHit: {fileID: 9192790601191959957, guid: 80ef8eda5a943c74080680478ad34653, type: 3}
 --- !u!82 &7290781867351067084
 AudioSource:
   m_ObjectHideFlags: 0
@@ -141,7 +142,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2203773368e4340d98c114f55c2dd7fd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4aa1c274c19783844b3ee480ba26567c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1

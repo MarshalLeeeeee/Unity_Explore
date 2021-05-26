@@ -8,6 +8,7 @@ public class BulletBehavior : MonoBehaviour
     public float maxDestroyTime = 10.0f;
     public GameObject bouncePad;
     public GameObject throughPad;
+    public GameObject bulletHit;
 
     private Transform shooter;
     private Rigidbody rb;
@@ -39,6 +40,7 @@ public class BulletBehavior : MonoBehaviour
             }
         }
         Destroy(gameObject, 1.0f);
+        Instantiate(bulletHit, collision.GetContact(0).point, Quaternion.identity);
         collision.GetContact(0).thisCollider.isTrigger = true;
     }
 

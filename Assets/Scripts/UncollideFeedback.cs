@@ -14,6 +14,6 @@ public class UncollideFeedback : MonoBehaviour
             Vector3 force = -collision.GetContact(0).normal * collisionForce;
             force = new Vector3(force.x, force.y * verticalRatio, force.z);
             collision.rigidbody.AddForce(force, ForceMode.Impulse);
-        }  
+        }
     }
 }
