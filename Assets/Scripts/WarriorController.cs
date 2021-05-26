@@ -107,15 +107,20 @@ public class WarriorController : MonoBehaviour
 
         // play sound
         if (onGround) groundSpeed = Mathf.Sqrt(Mathf.Pow(forwardSpeed, 2.0f) + Mathf.Pow(horizonSpeed, 2.0f));
-        else groundSpeed = 0.0f;
-        if (groundSpeedPrev <= 0.1f && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
+        else groundSpeed = -1.0f;
+        if (groundSpeedPrev < 0.0f && groundSpeed >= 0.0f)
         {
-            // still ground speed to run
+            // fly to still
+            soundController.still();
+        }
+        else if (groundSpeedPrev <= 0.1f && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
+        {
+            // still or fly to run
             soundController.run();
         }
         else if (groundSpeedPrev <= 0.1f && groundSpeed > 0.1f)
         {
-            // still ground speed to walk
+            // still or fly to walk
             soundController.walk();
         }
         else if (groundSpeedPrev <= horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
@@ -123,11 +128,15 @@ public class WarriorController : MonoBehaviour
             // walk to run
             soundController.run();
         }
+        else if (groundSpeedPrev >= 0.0f && groundSpeed < 0.0f)
+        {
+            // any to fly
+            soundController.fly();
+        }
         else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= 0.1f)
         {
             // run to still
-            if (onGround) soundController.still();
-            else soundController.fly();
+            soundController.still();
         }
         else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
         {
@@ -137,8 +146,7 @@ public class WarriorController : MonoBehaviour
         else if (groundSpeedPrev > 0.1f && groundSpeed <= 0.1f)
         {
             // walk to still
-            if (onGround) soundController.still();
-            else soundController.fly();
+            soundController.still();
         }
         groundSpeedPrev = groundSpeed;
 
