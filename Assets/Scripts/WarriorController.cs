@@ -126,7 +126,8 @@ public class WarriorController : MonoBehaviour
         else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= 0.1f)
         {
             // run to still
-            soundController.still();
+            if (onGround) soundController.still();
+            else soundController.fly();
         }
         else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
         {
@@ -136,7 +137,8 @@ public class WarriorController : MonoBehaviour
         else if (groundSpeedPrev > 0.1f && groundSpeed <= 0.1f)
         {
             // walk to still
-            soundController.still();
+            if (onGround) soundController.still();
+            else soundController.fly();
         }
         groundSpeedPrev = groundSpeed;
 

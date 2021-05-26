@@ -7,6 +7,7 @@ public class WarriorSoundController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip walkSound;
     public AudioClip runSound;
+    public AudioClip flySound;
 
     private void Start()
     {
@@ -27,6 +28,12 @@ public class WarriorSoundController : MonoBehaviour
     public void run()
     {
         audioSource.clip = runSound;
+        audioSource.Play();
+    }
+
+    public void fly()
+    {
+        audioSource.clip = flySound;
         audioSource.Play();
     }
 }
