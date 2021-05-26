@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - JumpPad
   - ThroughPad
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionForce: 1000
+  verticalRatio: 0.2

@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class WarriorShootController : MonoBehaviour
 {
-    public GameObject bullet;
+    public GameObject logicBullet;
     public float singleShootInterval = 0.5f;
     public float autoShootInterval = 0.1f;
     public float reloadTime = 2.667f;
     public int magSize = 30;
+    public float bounceCoolDown = 2.0f;
+    public float throughCoolDown = 2.0f;
 
     private float shootStart = -1.0f;
+    private float bounceStart = -1.0f;
+    private float throughStart = -1.0f;
     private float reloadStart;
     private int currentMagSize;
 
     private bool shootMode = true;
     private bool inSemiShoot = false;
     private bool inReloading = false;
+    private bool bounceTrigger = false;
+    private bool throughTrigger = false;
 
     private Animator warriorAnim;
     private Transform rifleTransform;
@@ -39,6 +45,23 @@ public class WarriorShootController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // bounce skill
+        if (Input.GetKeyDown(KeyCode.E) && Time.time >= bounceStart + bounceCoolDown)
+        {
+            if (!bounceTrigger) bounceTrigger = true;
+            else bounceTrigger = false;
+            throughTrigger = false;
+        }
+
+        // through skill
+        if (Input.GetKeyDown(KeyCode.Q) && Time.time >= throughStart + throughCoolDown)
+        {
+            bounceTrigger = false;
+            if (!throughTrigger) throughTrigger = true;
+            else throughTrigger = false;
+        }
+
+
         // shoot
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -49,10 +72,28 @@ public class WarriorShootController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
-                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f), transform);
+                shootStart = Time.time;
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
+                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
+                bb.setShooter(transform);
+
+                if (bounceTrigger)
+                {
+                    Debug.Log("bounce bullet");
+                    bb.setBounce();
+                    bounceStart = shootStart;
+                    bounceTrigger = false;
+                }
+                else if (throughTrigger)
+                {
+                    Debug.Log("through bullet");
+                    bb.setThrough();
+                    throughStart = shootStart;
+                    throughTrigger = false;
+                }
+
                 fp.recoil();
                 currentMagSize -= 1;
-                shootStart = Time.time;
                 inSemiShoot = true;
                 warriorAnim.SetTrigger("singleShootTrigger");
             }
@@ -65,10 +106,28 @@ public class WarriorShootController : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
-                Instantiate(bullet, rifleTransform.position - 0.9f * rifleTransform.right - 0.9f * rifleTransform.up + 0.01f * rifleTransform.forward, rifleTransform.rotation * Quaternion.Euler(0.0f, 0.0f, 135.0f), transform);
+                shootStart = Time.time;
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
+                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
+                bb.setShooter(transform);
+
+                if (bounceTrigger)
+                {
+                    Debug.Log("bounce bullet");
+                    bb.setBounce();
+                    bounceStart = shootStart;
+                    bounceTrigger = false;
+                }
+                else if (throughTrigger)
+                {
+                    Debug.Log("through bullet");
+                    bb.setThrough();
+                    throughStart = shootStart;
+                    throughTrigger = false;
+                }
+
                 fp.recoil();
                 currentMagSize -= 1;
-                shootStart = Time.time;
                 warriorAnim.SetBool("autoShootFlag", true);
             }
             else if (Input.GetMouseButtonUp(0))
