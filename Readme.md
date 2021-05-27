@@ -58,6 +58,12 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - We can modify the structure and kinematics of the animator components by ```OnAnimatorIK(int layerIndex)```. It should be noted that the ```IK Pass``` option of the layer in animator controller should be chosen.
 
 
+### UIScene
+ - The UI panel is realized by ```Canvas```.
+ - We can add text by ```+ / UI / Text - TextMeshPro```. ```TextMeshPro``` is an improvement of default text using a different rendering technique ```SDF```, which is based on the principle of rendering a Font Atlas at a high resolution. Resize the text will not lead to blur. Still, we can control the visual effect of text without recreating new font. We can combine ```Rich Text``` with ```TextMeshPro```. Even material, named ```Material Preset``` can be added to text to give it a special effect. For more details of the difference between ```TextMeshPro``` and default text, click [here](https://blog.unity.com/technology/making-the-most-of-textmesh-pro-in-unity-2018)
+ - We can anchor the text so that the position is relatively still with regard to the anchor position regardless of the size of the game window.
+
+
 ### 2DScene (not included in this repo)
  - In a 2D template project, the camera is orthographic by default. The canvas is parallel to XY-Plane where the the width is measured in ```X``` and height is measured in ```Y```. Since the camera is orthographic, ```Z``` does not affect the size of a game object, however, affected the visibility among multiple objects. What's more, only when the ```Z coordinate``` of an object is within the camera clipping planes will it be seen by camera.
  - We can alter the scene view between 2D and 3D via ```2D Button``` in the tool bar of scene view so as to visualize the depth of objects.
@@ -77,6 +83,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - ```OnAnimatorIK(int layerIndex)``` allows to update the kinematics of animation components, like bones, in a desired manner. It should be noted that the ```IK Pass``` option of the layer in animator controller should be chosen.
    - ```LateUpdate()``` is the last invoked event function in the Game Logic part, which is invoked after the internal animation update. Thus we can use it to update the joint in animation as we desired.
    - ```OnEnable()``` is called when the object becomes enabled and active. ```OnDisable()``` is called when the behaviour becomes disabled.
+   - We detect the interaction between our mouse and collider with ```OnMouseDown()``` when we press the mouse while colliding, ```OnMouseUp()``` when we release the mouse while colliding, ```OnMouseDrag()``` when we keep pressing the mouse while colliding, ```OnMouseEnter()``` when the mouse collider enters the object collider, ```OnMouseExit()``` when the mouse collider exits the object collider, ```OnMouseOver()``` when the mouse collider stays colliding with the object. They are detected simultanuously, i.e., we can conclude that when ```OnMouseDrag()``` is called, ```OnMouseOver()``` must can called as well. These functions should be declared in the script which is the component of the target gameObject whose collider is what we want to interact with. Also, make sure the gameObject has its collider, whether trigger or not is not important.
 
  - Object: Base class for all objects Unity can reference. Therefore, for static methods, we do not have to explicit write prefix ```Object.```. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Object.html).
    - Every object in unity can transfer to string via ```ToString()```.
@@ -138,8 +145,11 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Random: Generate random data. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Random.html).
    - Generate Vecotr4-like Color via ```ColorHSV```.
    - Generate random float number via ```Range(float min, float max)```.
+   - Generate random unit vector via property ```onUnitSphere```.
 
  - Debug: Class containing methods to ease debugging while developing. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Debug.html).
    - Print a message at the bottom of game view via ```Log()```.
 
  - Mathf: A collection of common math functions. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
+
+ - TextMeshPro: Interface to TextMeshPro component. For detailed API, click [here](http://digitalnativestudios.com/textmeshpro/docs/ScriptReference/TextMeshPro.html)
