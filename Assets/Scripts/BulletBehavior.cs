@@ -26,6 +26,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.transform.tag);
         if ((bounceTrigger || throughTrigger) && collision.transform.tag == "Floor")
         {
             Transform colliderTransform = collision.transform;
