@@ -164,3 +164,8 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
  - Button: Class in UnityEngine.UI. A standard button that can be clicked in order to trigger an event. For detailed API, click [here](https://docs.unity3d.com/2018.3/Documentation/ScriptReference/UI.Button.html)
    - We can determine the behavior of button clicking using 2 methods - Editor / ```button.onClick.AddListener()```. Editor implements a static binding which is faster which ```button.onClick.AddListener()``` implements a dynamic binding which enables us to choose the behavior via script with less limitations, e.g., more conditions. A good advice of coding is to call ```AddListener()``` in ```OnEnable()``` and ```RemoveListener()``` in ```OnDisable()```.
+
+ - Cursor: Interface for setting the cursor (mouse pointer). For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Cursor.html).
+   - ```lockState``` determines whether the hardware pointer is locked to the center of the view, constrained to the window, or not constrained at all. ```CursorLockMode.None``` makes the cursor unmodified, ```CursorLockMode.Locked``` makes the cursor lock at the center of the game window, ```CursorLockMode.Confined``` constrain the cursor inside the window.
+   - ```visible``` determines whether the cursor is visible. Note that ```CursorLockMode.Locked``` implicitly makes the cursor invisible.
+   - ```SetCursor(Texture2D texture, Vector2 hotspot, CursorMode cursorMode)``` set cursor with texture.
