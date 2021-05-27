@@ -66,7 +66,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - We can anchor the text so that the position is relatively still with regard to the anchor position regardless of the size of the game window.
  - We can make the text unaffected by the text box by choosing ```Wrapping``` as disable.
  - We can control the visibility of the text and other UI components by controlling their alive status.
- - Button interaction is implemented by ```Button / OnClick()```, which receives a accessable (usually public) function as the behavior after being clicked.
+ - Button interaction can be defined through editor by ```Button / OnClick()```, which receives a accessable (usually public) function as the behavior after being clicked. Additionally, we can define the click behavior through ```button.onClick.AddListener()``` which can bring us less limitation and really decide what function to be called. But remember to remove the listener afterwards.
  - Scene is managed by ```SceneManager```, which stores the information as well as behavior of the scene.
 
 
@@ -161,3 +161,6 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - TextMeshPro: Interface to TextMeshPro component. For detailed API, click [here](http://digitalnativestudios.com/textmeshpro/docs/ScriptReference/TextMeshPro.html)
    - To interact with ```TextMeshPro```, using the interface ```TMPro``` in the C# script.
    - We can get the gameObject of the UI component by ```gameObject``` property, then we can control it using the interface of gameObject in Unity.
+
+ - Button: Class in UnityEngine.UI. A standard button that can be clicked in order to trigger an event. For detailed API, click [here](https://docs.unity3d.com/2018.3/Documentation/ScriptReference/UI.Button.html)
+   - We can determine the behavior of button clicking using 2 methods - Editor / ```button.onClick.AddListener()```. Editor implements a static binding which is faster which ```button.onClick.AddListener()``` implements a dynamic binding which enables us to choose the behavior via script with less limitations, e.g., more conditions. A good advice of coding is to call ```AddListener()``` in ```OnEnable()``` and ```RemoveListener()``` in ```OnDisable()```.
