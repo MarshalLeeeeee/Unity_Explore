@@ -60,8 +60,14 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
 ### UIScene
  - The UI panel is realized by ```Canvas```.
- - We can add text by ```+ / UI / Text - TextMeshPro```. ```TextMeshPro``` is an improvement of default text using a different rendering technique ```SDF```, which is based on the principle of rendering a Font Atlas at a high resolution. Resize the text will not lead to blur. Still, we can control the visual effect of text without recreating new font. We can combine ```Rich Text``` with ```TextMeshPro```. Even material, named ```Material Preset``` can be added to text to give it a special effect. For more details of the difference between ```TextMeshPro``` and default text, click [here](https://blog.unity.com/technology/making-the-most-of-textmesh-pro-in-unity-2018)
+ - We can add text by ```+ / UI / Text - TextMeshPro``` and for other UI compenents similiarly. ```TextMeshPro``` is an improvement of default text using a different rendering technique ```SDF```, which is based on the principle of rendering a Font Atlas at a high resolution. Resize the text will not lead to blur. Still, we can control the visual effect of text without recreating new font. We can combine ```Rich Text``` with ```TextMeshPro```. Even material, named ```Material Preset``` can be added to text to give it a special effect. For more details of the difference between ```TextMeshPro``` and default text, click [here](https://blog.unity.com/technology/making-the-most-of-textmesh-pro-in-unity-2018)
+ - ```Button - TextMeshPro``` is a Button that uses ```Text - TextMeshPro```, which is equivalent to create default button and replace text child with ```Text - TextMeshPro```.
+ - To use ```TextMeshPro``` in C#, add ```using TMPro```.
  - We can anchor the text so that the position is relatively still with regard to the anchor position regardless of the size of the game window.
+ - We can make the text unaffected by the text box by choosing ```Wrapping``` as disable.
+ - We can control the visibility of the text and other UI components by controlling their alive status.
+ - Button interaction is implemented by ```Button / OnClick()```, which receives a accessable (usually public) function as the behavior after being clicked.
+ - Scene is managed by ```SceneManager```, which stores the information as well as behavior of the scene.
 
 
 ### 2DScene (not included in this repo)
@@ -153,3 +159,5 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Mathf: A collection of common math functions. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Mathf.html).
 
  - TextMeshPro: Interface to TextMeshPro component. For detailed API, click [here](http://digitalnativestudios.com/textmeshpro/docs/ScriptReference/TextMeshPro.html)
+   - To interact with ```TextMeshPro```, using the interface ```TMPro``` in the C# script.
+   - We can get the gameObject of the UI component by ```gameObject``` property, then we can control it using the interface of gameObject in Unity.
