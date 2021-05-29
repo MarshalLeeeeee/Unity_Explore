@@ -19,6 +19,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - If ```Is Trigger``` in the collider is set as True, the gameobject will not collide and has collision reaction with other gameobejcts when the collider penetrates. The original collider region becomes a trigger, so that it is allowed to penetrates. From the code perspective, it reflects in the difference between ```OnCollisionXXX()``` and ```OnTriggerXXX()```.
  - For parent GameObject with children components, use the collider of the child mesh with the rigidbody of the parent. But if we would not like the newly instantiated child mesh to affect the center of mass of the parent mesh, we can add rigidbody of the children which overrides that of parent so that will not affect the mass which is defined in rigidbody component of the parent.
  - Add script to the object via ```Add Component / New Script```.
+ - One gameObject can have more than one collider. Currently, trial with one collider and one trigger does work.
 
 
 ### MaterialScene
