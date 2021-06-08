@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/AudioScene.unity
-    guid: 6d7caaa420f6a1348b86b9b80a627360
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: 3579da16aecce7e439cc8ebf898ea357
   - enabled: 1
     path: Assets/Scenes/LevelMenuScene.unity
     guid: e18eb4f521d16354ea14c19f5c2fd4f0
+  - enabled: 1
+    path: Assets/Scenes/GameScene_1.unity
+    guid: 196be2f891789c8469689abb385d8ab3
   m_configObjects: {}
