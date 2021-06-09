@@ -14,6 +14,7 @@ public class BulletBehavior : MonoBehaviour
     private Rigidbody rb;
     private bool bounceTrigger = false;
     private bool throughTrigger = false;
+    private GameObject trial;
 
     private void Start()
     {
@@ -26,7 +27,6 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.transform.tag);
         if ((bounceTrigger || throughTrigger) && collision.transform.tag == "Floor")
         {
             Transform colliderTransform = collision.transform;
@@ -41,6 +41,7 @@ public class BulletBehavior : MonoBehaviour
             }
         }
         Destroy(gameObject, 1.0f);
+        if (trial) Destroy(trial);
         Instantiate(bulletHit, collision.GetContact(0).point, Quaternion.identity);
         collision.GetContact(0).thisCollider.isTrigger = true;
     }
@@ -58,5 +59,10 @@ public class BulletBehavior : MonoBehaviour
     public void setThrough()
     {
         throughTrigger = true;
+    }
+
+    public void setTrial(GameObject t)
+    {
+        trial = t;
     }
 }

@@ -34,7 +34,8 @@ public class WarriorShootController : MonoBehaviour
     private Quaternion glowToRifle;
 
     private RaycastHit hit;
-
+    private GameObject shootGlowObject;
+    private Vector3 shootPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -89,17 +90,18 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
                 shootStart = Time.time;
-                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward*1.0f, fp.transform.rotation);
-                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
-                bb.setShooter(transform);
-
-                Vector3 shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
+                shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
                 Instantiate(shootGlow, shootPoint, Quaternion.identity);
 
                 Vector3 shootDirection;
-                if (Physics.Raycast(new Ray(fp.transform.position, fp.transform.forward), out hit, 1000.0f)) shootDirection = (shootPoint-hit.point).normalized;
-                else shootDirection = (rifleTransform.up + rifleTransform.right).normalized;
-                Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(bulletTrial.transform.forward, shootDirection));
+                if (Physics.Raycast(new Ray(fp.transform.position + fp.transform.forward, fp.transform.forward), out hit, 1000.0f)) shootDirection = (hit.point - shootPoint).normalized;
+                else shootDirection = (fp.transform.position + fp.transform.forward * 10000.0f - shootPoint).normalized;
+                GameObject trial = Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(Vector3.forward, shootDirection));
+
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward * 1.0f, fp.transform.rotation);
+                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
+                bb.setShooter(transform);
+                bb.setTrial(trial);
 
                 if (bounceTrigger)
                 {
@@ -131,17 +133,18 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
                 shootStart = Time.time;
-                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward * 1.0f, fp.transform.rotation);
-                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
-                bb.setShooter(transform);
-
-                Vector3 shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
+                shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
                 Instantiate(shootGlow, shootPoint, Quaternion.identity);
 
                 Vector3 shootDirection;
-                if (Physics.Raycast(new Ray(fp.transform.position, fp.transform.forward), out hit, 1000.0f)) shootDirection = (shootPoint - hit.point).normalized;
-                else shootDirection = (rifleTransform.up + rifleTransform.right).normalized;
-                Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(bulletTrial.transform.forward, shootDirection));
+                if (Physics.Raycast(new Ray(fp.transform.position + fp.transform.forward, fp.transform.forward), out hit, 1000.0f)) shootDirection = (hit.point - shootPoint).normalized;
+                else shootDirection = (fp.transform.position + fp.transform.forward * 10000.0f - shootPoint).normalized;
+                GameObject trial = Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(Vector3.forward, shootDirection));
+
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward * 1.0f, fp.transform.rotation);
+                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
+                bb.setShooter(transform);
+                bb.setTrial(trial);
 
                 if (bounceTrigger)
                 {
