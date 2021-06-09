@@ -12,7 +12,12 @@ public class WarriorController : MonoBehaviour
     public float horizonSpeedMax = 2.0f;
     public float upForce = 5.0f;
     public float horizonSensitivity = 0.5f;
+    public bool userInput = true;
+    public float jumpProb = 0.0f;
+    public GameObject jetSmoke;
 
+    float horizonInput;
+    float forwardInput;
     Matrix4x4 planeRotationMatrix; // local coordinate to surface coordinate
     private Quaternion standingPlaneRotation; // local coordinate to surface coordinate
     private float forwardSpeed = 0.0f; // forward velocity in local surface coordinate
@@ -40,11 +45,15 @@ public class WarriorController : MonoBehaviour
     private Transform rifleTransform; // rifle gun transform
     private Transform spineTransform; // spine transform
     private Vector3 rifleToSpinePos; // relative position of rifle to spine
-    private Quaternion rifleToSpineRotation; // relative position of rifle to spine
+    private Quaternion rifleToSpineRotation; // relative rotation of rifle to spine
+    private Quaternion jetToSpineRotation; // relative rotation of jet to spine
 
     private FollowPlayer fp; // get vertical angle from camera view
     private WarriorSoundController soundController; // get sound controller to trigger foot step sound
-        
+
+    private GameObject leftJetSmoke;
+    private GameObject rightJetSmoke;
+
 
     private void Start()
     {
@@ -63,6 +72,7 @@ public class WarriorController : MonoBehaviour
         spineTransform = transform.Find("Hips/Spine");
         rifleToSpinePos = spineTransform.worldToLocalMatrix.MultiplyPoint3x4(rifleTransform.position);
         rifleToSpineRotation = Quaternion.Inverse(spineTransform.rotation) * rifleTransform.rotation;
+        jetToSpineRotation = Quaternion.Inverse(spineTransform.rotation) * jetSmoke.transform.rotation;
         yield return null;
     }
 
@@ -91,12 +101,21 @@ public class WarriorController : MonoBehaviour
     private void Update()
     {
         // mouse movement
-        yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
+        if (userInput) yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);
 
         // movement control
-        float horizonInput = Input.GetAxis("Horizontal");
-        float forwardInput = Input.GetAxis("Vertical");
+        if (userInput)
+        {
+            horizonInput = Input.GetAxis("Horizontal");
+            forwardInput = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            horizonInput = Random.Range(-1.0f, 1.0f);
+            forwardInput = Random.Range(-1.0f, 1.0f);
+        }
+
 
         planeRotationMatrix = Matrix4x4.Rotate(standingPlaneRotation);
         forwardDirection = planeRotationMatrix.MultiplyPoint3x4(transform.forward);
@@ -166,7 +185,22 @@ public class WarriorController : MonoBehaviour
         }
         
         // jump
-        if (Input.GetKeyDown(KeyCode.Space) && onGround) jumpTrigger = true;
+        if (userInput)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && onGround) jumpTrigger = true;
+        }
+        else
+        {
+            if (Random.Range(0.0f, 1.0f) < jumpProb && onGround) jumpTrigger = true;
+        }
+
+        if (!onGround)
+        {
+            leftJetSmoke.transform.position = spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (0.2f);
+            leftJetSmoke.transform.rotation = spineTransform.rotation * jetToSpineRotation;
+            rightJetSmoke.transform.position = spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (-0.2f);
+            rightJetSmoke.transform.rotation = spineTransform.rotation * jetToSpineRotation;
+        }
     }
 
     private void LateUpdate()
@@ -187,7 +221,12 @@ public class WarriorController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Floor") && isStanding(collision))
         {
-            if (!onGround) onGround = true;
+            if (!onGround)
+            {
+                onGround = true;
+                Destroy(leftJetSmoke);
+                Destroy(rightJetSmoke);
+            }
             standingPlaneRotation = Quaternion.FromToRotation(Vector3.up, collision.contacts[0].normal.normalized);
         }
     }
@@ -197,6 +236,8 @@ public class WarriorController : MonoBehaviour
         if (collision.transform.CompareTag("Floor"))
         {
             onGround = false;
+            leftJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (0.2f), spineTransform.rotation * rifleToSpineRotation);
+            rightJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (-0.2f), spineTransform.rotation * rifleToSpineRotation);
             forwardSpeedInAir = forwardSpeed;
             horizonSpeedInAir = horizonSpeed;
             standingPlaneRotation = Quaternion.identity;
