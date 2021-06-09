@@ -235,11 +235,14 @@ public class WarriorController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Floor"))
         {
-            onGround = false;
-            leftJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (0.2f), spineTransform.rotation * rifleToSpineRotation);
-            rightJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (-0.2f), spineTransform.rotation * rifleToSpineRotation);
-            forwardSpeedInAir = forwardSpeed;
-            horizonSpeedInAir = horizonSpeed;
+            if (onGround)
+            {
+                onGround = false;
+                leftJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (0.2f), spineTransform.rotation * jetToSpineRotation);
+                rightJetSmoke = Instantiate(jetSmoke, spineTransform.position + spineTransform.up * (-0.4f) + spineTransform.forward * (-0.2f), spineTransform.rotation * jetToSpineRotation);
+                forwardSpeedInAir = forwardSpeed;
+                horizonSpeedInAir = horizonSpeed;
+            }
             standingPlaneRotation = Quaternion.identity;
         }
     }

@@ -31,12 +31,17 @@ public class WarriorShootController : MonoBehaviour
     private Transform spineTransform;
     private RifleSoundController rifleSoundController;
     private FollowPlayer fp;
+    private Quaternion glowToRifle;
+
+    private RaycastHit hit;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rifleTransform = transform.Find("Hips/ArmPosition_Right");
         spineTransform = transform.Find("Hips/Spine");
+        StartCoroutine(getInitPose());
         warriorAnim = GetComponent<Animator>();
         warriorAnim.SetFloat("singleShootProp", 0.3f);
         warriorAnim.SetFloat("autoShootProp", 0.3f);
@@ -44,6 +49,13 @@ public class WarriorShootController : MonoBehaviour
         rifleSoundController = FindObjectOfType<RifleSoundController>();
         currentMagSize = magSize;
         fp = FindObjectOfType<FollowPlayer>();
+    }
+
+    IEnumerator getInitPose()
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        glowToRifle = Quaternion.Inverse(rifleTransform.rotation) * shootGlow.transform.rotation;
+        yield return null;
     }
 
     // Update is called once per frame
@@ -77,10 +89,17 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
                 shootStart = Time.time;
-                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward*1.0f, fp.transform.rotation);
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
-                Instantiate(shootGlow, rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f), shootGlow.transform.rotation);
+
+                Vector3 shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
+                Instantiate(shootGlow, shootPoint, Quaternion.identity);
+
+                Vector3 shootDirection;
+                if (Physics.Raycast(new Ray(fp.transform.position, fp.transform.forward), out hit, 1000.0f)) shootDirection = (shootPoint-hit.point).normalized;
+                else shootDirection = (rifleTransform.up + rifleTransform.right).normalized;
+                Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(bulletTrial.transform.forward, shootDirection));
 
                 if (bounceTrigger)
                 {
@@ -112,10 +131,17 @@ public class WarriorShootController : MonoBehaviour
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
                 shootStart = Time.time;
-                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
+                GameObject bulletObject = Instantiate(logicBullet, fp.transform.position + fp.transform.forward * 1.0f, fp.transform.rotation);
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
-                Instantiate(shootGlow, rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f), shootGlow.transform.rotation);
+
+                Vector3 shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
+                Instantiate(shootGlow, shootPoint, Quaternion.identity);
+
+                Vector3 shootDirection;
+                if (Physics.Raycast(new Ray(fp.transform.position, fp.transform.forward), out hit, 1000.0f)) shootDirection = (shootPoint - hit.point).normalized;
+                else shootDirection = (rifleTransform.up + rifleTransform.right).normalized;
+                Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(bulletTrial.transform.forward, shootDirection));
 
                 if (bounceTrigger)
                 {
