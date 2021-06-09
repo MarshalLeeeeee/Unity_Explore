@@ -5,6 +5,8 @@ using UnityEngine;
 public class WarriorShootController : MonoBehaviour
 {
     public GameObject logicBullet;
+    public GameObject shootGlow;
+    public GameObject bulletTrial;
     public float singleShootInterval = 0.5f;
     public float autoShootInterval = 0.1f;
     public float reloadTime = 2.667f;
@@ -26,6 +28,7 @@ public class WarriorShootController : MonoBehaviour
 
     private Animator warriorAnim;
     private Transform rifleTransform;
+    private Transform spineTransform;
     private RifleSoundController rifleSoundController;
     private FollowPlayer fp;
 
@@ -33,6 +36,7 @@ public class WarriorShootController : MonoBehaviour
     void Start()
     {
         rifleTransform = transform.Find("Hips/ArmPosition_Right");
+        spineTransform = transform.Find("Hips/Spine");
         warriorAnim = GetComponent<Animator>();
         warriorAnim.SetFloat("singleShootProp", 0.3f);
         warriorAnim.SetFloat("autoShootProp", 0.3f);
@@ -76,6 +80,7 @@ public class WarriorShootController : MonoBehaviour
                 GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
+                Instantiate(shootGlow, rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f), shootGlow.transform.rotation);
 
                 if (bounceTrigger)
                 {
@@ -110,6 +115,7 @@ public class WarriorShootController : MonoBehaviour
                 GameObject bulletObject = Instantiate(logicBullet, fp.transform.position, fp.transform.rotation);
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
+                Instantiate(shootGlow, rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f), shootGlow.transform.rotation);
 
                 if (bounceTrigger)
                 {

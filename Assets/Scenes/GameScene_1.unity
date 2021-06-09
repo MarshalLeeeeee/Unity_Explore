@@ -1742,6 +1742,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: shootGlow
+      value: 
+      objectReference: {fileID: 3993267234817211191, guid: b2b13c953c334bc4983c6f5f384ab115, type: 3}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: bulletTrial
+      value: 
+      objectReference: {fileID: 7045583799490840615, guid: 0595de7dd207e5d4488c5a9ce162c8d7, type: 3}
     - target: {fileID: 7221377091732924126, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
       propertyPath: jetSmoke
       value: 
