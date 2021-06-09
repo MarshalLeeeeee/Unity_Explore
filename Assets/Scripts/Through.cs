@@ -8,7 +8,6 @@ public class Through : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
         if (other.attachedRigidbody && other.tag != "Bullet" && !other.isTrigger)
         {
             other.isTrigger = true;
