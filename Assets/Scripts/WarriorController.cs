@@ -48,7 +48,8 @@ public class WarriorController : MonoBehaviour
     private Quaternion rifleToSpineRotation; // relative rotation of rifle to spine
     private Quaternion jetToSpineRotation; // relative rotation of jet to spine
 
-    private FollowPlayer fp; // get vertical angle from camera view
+    private FollowPlayer fp; // get vertical angle from camera view, only used for player
+    private FaceWarrior fw; // get vertical angle from face warrior, only used for npc
     private WarriorSoundController soundController; // get sound controller to trigger foot step sound
 
     private GameObject leftJetSmoke;
@@ -62,7 +63,8 @@ public class WarriorController : MonoBehaviour
         soundController = GetComponent<WarriorSoundController>();
         StartCoroutine(getInitPose());
         standingPlaneRotation = Quaternion.identity;
-        fp = FindObjectOfType<FollowPlayer>();
+        if (userInput) fp = FindObjectOfType<FollowPlayer>();
+        else fw = GetComponent<FaceWarrior>();
     }
 
     IEnumerator getInitPose()
@@ -207,7 +209,8 @@ public class WarriorController : MonoBehaviour
     {
         if (spineTransform)
         {
-            spineTransform.RotateAround(spineTransform.position, transform.right, fp.getPoseXAngle());
+            if (userInput) spineTransform.RotateAround(spineTransform.position, transform.right, fp.getPoseXAngle());
+            else spineTransform.RotateAround(spineTransform.position, transform.right, fw.getPoseXAngle());
         }
         if (rifleTransform)
         {

@@ -1821,6 +1821,7 @@ MonoBehaviour:
   horizonSensitivity: 0.5
   userInput: 1
   jumpProb: 0
+  jetSmoke: {fileID: 9031473298392989480, guid: 490adf5cb1987444082a37de2fd455db, type: 3}
 --- !u!114 &7221377091732924120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,6 +1850,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
+  shootGlow: {fileID: 3993267234817211191, guid: b2b13c953c334bc4983c6f5f384ab115, type: 3}
+  bulletTrial: {fileID: 7045583799490840615, guid: 0595de7dd207e5d4488c5a9ce162c8d7, type: 3}
   singleShootInterval: 0.5
   autoShootInterval: 0.1
   reloadTime: 2.667

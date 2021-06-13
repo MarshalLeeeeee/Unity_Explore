@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2418760521819367761}
   - component: {fileID: 2418760521819367766}
   - component: {fileID: 2418760521819367767}
+  - component: {fileID: -5481237758443277490}
+  - component: {fileID: -2268294143371504891}
   m_Layer: 0
   m_Name: PowerSphere
   m_TagString: Untagged
@@ -28,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2418760521819367764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 68.968, y: 1.412, z: 39.127}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,3 +97,30 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5481237758443277490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418760521819367764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ee955761e67d4ba4abb4397d774c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularVel: 30
+--- !u!114 &-2268294143371504891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418760521819367764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02ebef7577d1ad4d8366fe307c0c12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posRange: {x: 5, y: 5, z: 5}
+  switchTime: 1

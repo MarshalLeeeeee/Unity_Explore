@@ -9,6 +9,7 @@ public class Bounce : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //print(other.tag);
         if (other.attachedRigidbody && other.tag != "Bullet")
         {
             if (Vector3.Dot(other.transform.position - transform.position, transform.up) > 0.0f)

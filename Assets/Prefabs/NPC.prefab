@@ -1628,9 +1628,10 @@ GameObject:
   - component: {fileID: 2931519692669125877}
   - component: {fileID: 2931519692669125878}
   - component: {fileID: 2931519692669125875}
+  - component: {fileID: -2280348200969043058}
   m_Layer: 0
   m_Name: NPC
-  m_TagString: Player
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1814,6 +1815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
+  shootGlow: {fileID: 0}
+  bulletTrial: {fileID: 0}
   singleShootInterval: 0.5
   autoShootInterval: 0.1
   reloadTime: 2.667
@@ -1856,6 +1859,7 @@ MonoBehaviour:
   horizonSensitivity: 0.5
   userInput: 0
   jumpProb: 0.001
+  jetSmoke: {fileID: 9031473298392989480, guid: c3a502a4206619b46bcffd430745a41d, type: 3}
 --- !u!114 &2931519692669125878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,7 +1867,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2931519692313477956}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f479b3a540d6070458c83dea6e659896, type: 3}
   m_Name: 
@@ -1883,7 +1887,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36c3675a9009db4d99d3dafcca0dc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  senseRadius: 50
+  senseRadius: 100
+  logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
+  shootGlow: {fileID: 3993267234817211191, guid: ef65fc830e6aa26479342c41bec5c5db, type: 3}
+  bulletTrial: {fileID: 7045583799490840615, guid: 8628624f50ffa90429914d5eb6e48e32, type: 3}
+  singleShootInterval: 0.5
+--- !u!114 &-2280348200969043058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2931519692313477956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8166ad3a73a0cf40a82ae6797609c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restrict: {x: 5, y: 0, z: 5}
+  force: 50
 --- !u!1 &2931519692313477958
 GameObject:
   m_ObjectHideFlags: 0

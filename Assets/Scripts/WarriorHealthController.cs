@@ -57,7 +57,6 @@ public class WarriorHealthController : MonoBehaviour
     {
         currentHealth = 0;
         alive = false;
-        Debug.Log("Death");
     }
 
     private void checkHealth()

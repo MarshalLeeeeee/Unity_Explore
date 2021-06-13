@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6335659226511637201}
   - component: {fileID: 6335659226511637205}
   - component: {fileID: -5748145523142977350}
+  - component: {fileID: -5601319352354563830}
   m_Layer: 0
   m_Name: BouncePad
   m_TagString: JumpPad
@@ -122,3 +123,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upVelocity: 1000
+--- !u!114 &-5601319352354563830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335659226511637200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1c5098b3b71574f90699fec57415c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 5

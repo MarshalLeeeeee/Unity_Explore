@@ -28,36 +28,25 @@ public class WarriorShootController : MonoBehaviour
 
     private Animator warriorAnim;
     private Transform rifleTransform;
-    private Transform spineTransform;
     private RifleSoundController rifleSoundController;
     private FollowPlayer fp;
-    private Quaternion glowToRifle;
 
     private RaycastHit hit;
-    private GameObject shootGlowObject;
     private Vector3 shootPoint;
 
     // Start is called before the first frame update
     void Start()
     {
         rifleTransform = transform.Find("Hips/ArmPosition_Right");
-        spineTransform = transform.Find("Hips/Spine");
-        StartCoroutine(getInitPose());
         warriorAnim = GetComponent<Animator>();
         warriorAnim.SetFloat("singleShootProp", 0.3f);
         warriorAnim.SetFloat("autoShootProp", 0.3f);
         warriorAnim.SetFloat("reloadProp", 0.3f);
-        rifleSoundController = FindObjectOfType<RifleSoundController>();
+        rifleSoundController = transform.Find("AssaultRifle").gameObject.GetComponent<RifleSoundController>();
         currentMagSize = magSize;
         fp = FindObjectOfType<FollowPlayer>();
     }
 
-    IEnumerator getInitPose()
-    {
-        yield return new WaitForSeconds(Time.deltaTime);
-        glowToRifle = Quaternion.Inverse(rifleTransform.rotation) * shootGlow.transform.rotation;
-        yield return null;
-    }
 
     // Update is called once per frame
     void Update()
@@ -105,14 +94,12 @@ public class WarriorShootController : MonoBehaviour
 
                 if (bounceTrigger)
                 {
-                    Debug.Log("bounce bullet");
                     bb.setBounce();
                     bounceStart = shootStart;
                     bounceTrigger = false;
                 }
                 else if (throughTrigger)
                 {
-                    Debug.Log("through bullet");
                     bb.setThrough();
                     throughStart = shootStart;
                     throughTrigger = false;
@@ -148,14 +135,12 @@ public class WarriorShootController : MonoBehaviour
 
                 if (bounceTrigger)
                 {
-                    Debug.Log("bounce bullet");
                     bb.setBounce();
                     bounceStart = shootStart;
                     bounceTrigger = false;
                 }
                 else if (throughTrigger)
                 {
-                    Debug.Log("through bullet");
                     bb.setThrough();
                     throughStart = shootStart;
                     throughTrigger = false;
