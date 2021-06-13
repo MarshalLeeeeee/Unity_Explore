@@ -14,7 +14,8 @@ public class WarriorController : MonoBehaviour
     public float horizonSensitivity = 0.5f;
     public bool userInput = true;
     public float jumpProb = 0.0f;
-    public GameObject jetSmoke;
+    public GameObject[] jetSmokes;
+    private GameObject jetSmoke;
 
     float horizonInput;
     float forwardInput;
@@ -58,6 +59,7 @@ public class WarriorController : MonoBehaviour
 
     private void Start()
     {
+        jetSmoke = jetSmokes[0];
         warriorAnim = GetComponent<Animator>();
         warriorRb = GetComponent<Rigidbody>();
         soundController = GetComponent<WarriorSoundController>();
@@ -250,8 +252,19 @@ public class WarriorController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (leftJetSmoke) Destroy(leftJetSmoke);
+        if (rightJetSmoke) Destroy(rightJetSmoke);
+    }
+
     private bool isStanding(Collision collision)
     {
         return Mathf.Abs(Vector3.Dot(collision.contacts[0].normal.normalized, Vector3.up)) >= Mathf.Sqrt(3.0f) * 0.5f;
+    }
+
+    public void updateShield(int i)
+    {
+        jetSmoke = jetSmokes[i];
     }
 }

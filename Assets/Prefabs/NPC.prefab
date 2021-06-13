@@ -1623,12 +1623,11 @@ GameObject:
   - component: {fileID: 2931519692669125873}
   - component: {fileID: 2931519692669125872}
   - component: {fileID: 2931519692669125879}
-  - component: {fileID: 2931519692669125883}
   - component: {fileID: 2931519692669125876}
   - component: {fileID: 2931519692669125877}
-  - component: {fileID: 2931519692669125878}
   - component: {fileID: 2931519692669125875}
   - component: {fileID: -2280348200969043058}
+  - component: {fileID: -2789826113787188056}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -1802,27 +1801,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2931519692669125883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931519692313477956}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10c9b915e20e3e84ca84e2c38aa8b85f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
-  shootGlow: {fileID: 0}
-  bulletTrial: {fileID: 0}
-  singleShootInterval: 0.5
-  autoShootInterval: 0.1
-  reloadTime: 2.667
-  magSize: 30
-  bounceCoolDown: 0
-  throughCoolDown: 0
 --- !u!114 &2931519692669125876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,22 +1837,8 @@ MonoBehaviour:
   horizonSensitivity: 0.5
   userInput: 0
   jumpProb: 0.001
-  jetSmoke: {fileID: 9031473298392989480, guid: c3a502a4206619b46bcffd430745a41d, type: 3}
---- !u!114 &2931519692669125878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2931519692313477956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f479b3a540d6070458c83dea6e659896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initHealth: 100
-  deathHeight: -10
-  wallDamage: 50
+  jetSmokes:
+  - {fileID: 9031473298392989480, guid: c3a502a4206619b46bcffd430745a41d, type: 3}
 --- !u!114 &2931519692669125875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,11 +1851,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36c3675a9009db4d99d3dafcca0dc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  senseRadius: 100
+  senseRadius: 10
   logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
-  shootGlow: {fileID: 3993267234817211191, guid: ef65fc830e6aa26479342c41bec5c5db, type: 3}
   bulletTrial: {fileID: 7045583799490840615, guid: 8628624f50ffa90429914d5eb6e48e32, type: 3}
   singleShootInterval: 0.5
+  reloadTime: 2.667
+  magSize: 30
 --- !u!114 &-2280348200969043058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1906,6 +1871,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restrict: {x: 5, y: 0, z: 5}
   force: 50
+--- !u!114 &-2789826113787188056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2931519692313477956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39dfad1b8bc175b4fab0a31f36561da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initHealth: 100
+  deathHeight: -10
+  wallDamage: 50
+  powerFeedback: 0.2
+  shieldFeedBack: 0.5
 --- !u!1 &2931519692313477958
 GameObject:
   m_ObjectHideFlags: 0

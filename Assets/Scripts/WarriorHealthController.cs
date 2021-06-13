@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class WarriorHealthController : MonoBehaviour
 {
-    public int initHealth = 100;
+    public float initHealth = 100.0f;
     public float deathHeight = -10.0f;
-    public int wallDamage = 50;
+    public float wallDamage = 50.0f;
+    public float healthSoundInterval = 20.0f;
+    public float[] shieldAbsorbtion;
+    private float currentShieldAbsorbtion;
     
-    private int maxHealth;
-    private int currentHealth;
+    private float maxHealth;
+    private float prevHealthSound;
+    private float currentHealth;
     private bool alive = true;
     private HealthSoundController healthSound;
 
@@ -17,8 +21,10 @@ public class WarriorHealthController : MonoBehaviour
     void Start()
     {
         maxHealth = initHealth;
+        prevHealthSound = maxHealth;
         currentHealth = maxHealth;
-        healthSound = FindObjectOfType<HealthSoundController>();
+        currentShieldAbsorbtion = shieldAbsorbtion[0];
+        healthSound = transform.Find("head1").gameObject.GetComponent<HealthSoundController>();
     }
 
     // Update is called once per frame
@@ -28,6 +34,7 @@ public class WarriorHealthController : MonoBehaviour
         {
             death();
         }
+        if (currentHealth > prevHealthSound) prevHealthSound = currentHealth;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -39,17 +46,20 @@ public class WarriorHealthController : MonoBehaviour
         }
     }
 
-    public void takeDamage(int dmg)
+    public void takeDamage(float dmg)
     {
-        currentHealth -= dmg;
-        healthSound.takeDamage();
+        currentHealth -= dmg * currentShieldAbsorbtion;
+        if (currentHealth + healthSoundInterval < prevHealthSound)
+        {
+            healthSound.takeDamage();
+            prevHealthSound = currentHealth;
+        }
         checkHealth();
     }
 
-    public void takeHeal(int heal)
+    public void takeHeal(float heal)
     {
         currentHealth += heal;
-        healthSound.takeHeal();
         checkHealth();
     }
 
@@ -69,5 +79,10 @@ public class WarriorHealthController : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+    }
+
+    public void updateShield(int i)
+    {
+        currentShieldAbsorbtion = shieldAbsorbtion[i];
     }
 }

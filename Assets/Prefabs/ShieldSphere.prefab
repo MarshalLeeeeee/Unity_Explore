@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4571909505772448936}
   m_Layer: 0
   m_Name: ShieldSphere
-  m_TagString: Untagged
+  m_TagString: ShieldBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

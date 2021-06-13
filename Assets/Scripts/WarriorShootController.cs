@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WarriorShootController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class WarriorShootController : MonoBehaviour
     public int magSize = 30;
     public float bounceCoolDown = 2.0f;
     public float throughCoolDown = 2.0f;
+    public Image crosshairHit;
+    public float crosshairHitTime = 1.0f;
 
     private float shootStart = -1.0f;
     private float bounceStart = -1.0f;
@@ -170,5 +173,17 @@ public class WarriorShootController : MonoBehaviour
             inReloading = false;
             currentMagSize = magSize;
         }
+    }
+
+    public void hitFeedback()
+    {
+        StartCoroutine(activeCrosshair());
+    }
+
+    IEnumerator activeCrosshair()
+    {
+        crosshairHit.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        crosshairHit.gameObject.SetActive(false);
     }
 }

@@ -40,6 +40,35 @@ public class BulletBehavior : MonoBehaviour
                 Instantiate(throughPad, projectPoint, Quaternion.FromToRotation(colliderTransform.up, Vector3.up));
             }
         }
+        
+        if (shooter.tag == "Player")
+        {
+            if (collision.transform.tag == "NPC")
+            {
+                collision.gameObject.GetComponent<NpcHealthController>().takeDamage(10);
+            }
+            if (collision.transform.tag == "HealthBall")
+            {
+                shooter.gameObject.GetComponent<WarriorHealthController>().takeHeal(10.0f);
+                Destroy(collision.gameObject);
+            }
+            if (collision.transform.tag == "PowerBall")
+            {
+                shooter.gameObject.GetComponent<WarriorPowerController>().addPower(10.0f);
+                Destroy(collision.gameObject);
+            }
+            if (collision.transform.tag == "ShieldBall")
+            {
+                shooter.gameObject.GetComponent<WarriorShieldController>().addShield(25.0f);
+                Destroy(collision.gameObject);
+            }
+        }
+
+        if (shooter.tag == "NPC" && collision.transform.tag == "Player")
+        {
+            collision.gameObject.GetComponent<WarriorHealthController>().takeDamage(1);
+        }
+
         Destroy(gameObject, 1.0f);
         if (trial) Destroy(trial);
         Instantiate(bulletHit, collision.GetContact(0).point, Quaternion.identity);
