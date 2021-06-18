@@ -13,6 +13,7 @@ TagManager:
   - HealthBall
   - PowerBall
   - ShieldBall
+  - Canvas
   layers:
   - Default
   - TransparentFX

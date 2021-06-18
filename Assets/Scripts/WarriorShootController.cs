@@ -16,6 +16,7 @@ public class WarriorShootController : MonoBehaviour
     public GameObject logicBullet;
     public GameObject shootGlow;
     public GameObject bulletTrial;
+    public GameObject dmgText;
     public float singleShootInterval = 0.5f;
     public float autoShootInterval = 0.1f;
     public float reloadTime = 2.667f;
@@ -41,6 +42,7 @@ public class WarriorShootController : MonoBehaviour
     private Transform rifleTransform;
     private RifleSoundController rifleSoundController;
     private FollowPlayer fp;
+    private Transform canvas;
 
     private RaycastHit hit;
     private Vector3 shootPoint;
@@ -61,6 +63,7 @@ public class WarriorShootController : MonoBehaviour
         rifleSoundController = transform.Find("AssaultRifle").gameObject.GetComponent<RifleSoundController>();
         currentMagSize = magSize;
         fp = FindObjectOfType<FollowPlayer>();
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
 
@@ -203,15 +206,17 @@ public class WarriorShootController : MonoBehaviour
         magText.text = currentMagSize.ToString() + " / " + magSize.ToString();
     }
 
-    public void hitFeedback()
+    public void hitFeedback(float dmg)
     {
         StartCoroutine(activeCrosshair());
+        GameObject dt = Instantiate(dmgText, canvas);
+        dt.GetComponent<DmgTextTransform>().setDmg(dmg);
     }
 
     IEnumerator activeCrosshair()
     {
         crosshairHit.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.3f);
         crosshairHit.gameObject.SetActive(false);
     }
 }

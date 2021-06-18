@@ -55,7 +55,7 @@ public class NpcHealthController : MonoBehaviour
         checkHealth();
         float actualDmg = oldHealth - currentHealth;
         pc.addPower(actualDmg * powerFeedback);
-        sc.hitFeedback();
+        sc.hitFeedback(actualDmg);
     }
 
     public void takeHeal(float heal)

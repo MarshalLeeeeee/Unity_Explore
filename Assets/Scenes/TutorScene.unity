@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 169045514}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1449,6 +1449,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 939540992}
     - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: dmgText
+      value: 
+      objectReference: {fileID: 7945826547866905717, guid: 206a1d301565f7c4d8b6297343711a0f, type: 3}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
       propertyPath: magText
       value: 
       objectReference: {fileID: 1257018148}
@@ -2482,6 +2486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59de2c4a4ad6b549affab9e8dcb8806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnDelay: 2
   npc: {fileID: 2931519692313477956, guid: 4fdbcbcc33f9e734188fd14f8b515704, type: 3}
   npcOrigin: {x: 32.4, y: 15.5, z: -37.5}
   healthBall: {fileID: 6715426658803647228, guid: 5ead4679b741df540a3686ff5f3240aa, type: 3}
@@ -3885,7 +3890,7 @@ RectTransform:
   m_GameObject: {fileID: 2139307845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children: []
   m_Father: {fileID: 169045517}
   m_RootOrder: 0

@@ -9,6 +9,9 @@ public class BulletBehavior : MonoBehaviour
     public GameObject bouncePad;
     public GameObject throughPad;
     public GameObject bulletHit;
+    public float healthSupply = 25.0f;
+    public float powerSupply = 10.0f;
+    public float shieldSupply = 25.0f;
 
     private Transform shooter;
     private Rigidbody rb;
@@ -50,17 +53,17 @@ public class BulletBehavior : MonoBehaviour
             }
             if (collision.transform.tag == "HealthBall")
             {
-                shooter.gameObject.GetComponent<WarriorHealthController>().takeHeal(10.0f);
+                shooter.gameObject.GetComponent<WarriorHealthController>().takeHeal(healthSupply);
                 Destroy(collision.gameObject);
             }
             if (collision.transform.tag == "PowerBall")
             {
-                shooter.gameObject.GetComponent<WarriorPowerController>().addPower(10.0f);
+                shooter.gameObject.GetComponent<WarriorPowerController>().addPower(powerSupply);
                 Destroy(collision.gameObject);
             }
             if (collision.transform.tag == "ShieldBall")
             {
-                shooter.gameObject.GetComponent<WarriorShieldController>().addShield(25.0f);
+                shooter.gameObject.GetComponent<WarriorShieldController>().addShield(shieldSupply);
                 Destroy(collision.gameObject);
             }
         }
