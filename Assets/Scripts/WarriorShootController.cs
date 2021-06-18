@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class WarriorShootController : MonoBehaviour
 {
+    public TextMeshProUGUI magText;
+    public Image crosshairHit;
+    public Image bounceIcon;
+    public Image throughIcon;
+    public RawImage semiShootImg;
+    public RawImage autoShootImg;
+
     public GameObject logicBullet;
     public GameObject shootGlow;
     public GameObject bulletTrial;
@@ -14,12 +22,12 @@ public class WarriorShootController : MonoBehaviour
     public int magSize = 30;
     public float bounceCoolDown = 2.0f;
     public float throughCoolDown = 2.0f;
-    public Image crosshairHit;
     public float crosshairHitTime = 1.0f;
+    public float dmg = 25.0f;
 
-    private float shootStart = -1.0f;
-    private float bounceStart = -1.0f;
-    private float throughStart = -1.0f;
+    private float shootStart = -100.0f;
+    private float bounceStart = -100.0f;
+    private float throughStart = -100.0f;
     private float reloadStart;
     private int currentMagSize;
 
@@ -36,6 +44,11 @@ public class WarriorShootController : MonoBehaviour
 
     private RaycastHit hit;
     private Vector3 shootPoint;
+
+    private Color availableColor = new Color(0.0f, 0.0f, 0.0f);
+    private Color cdColor = new Color(0.35f, 0.35f, 0.35f);
+    private Color bounceColor = new Color(30.0f / 255.0f, 1.0f, 0.0f);
+    private Color throughColor = new Color(148.0f / 255.0f,0.0f,1.0f);
 
     // Start is called before the first frame update
     void Start()
@@ -70,15 +83,25 @@ public class WarriorShootController : MonoBehaviour
             else throughTrigger = false;
         }
 
+        if (Time.time < bounceStart + bounceCoolDown) bounceIcon.color = cdColor;
+        else if (bounceTrigger) bounceIcon.color = bounceColor;
+        else bounceIcon.color = availableColor;
+
+        if (Time.time < throughStart + throughCoolDown) throughIcon.color = cdColor;
+        else if (throughTrigger) throughIcon.color = throughColor;
+        else throughIcon.color = availableColor;
+
 
         // shoot
         if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (shootMode) { shootMode = false; }
-            else { shootMode = true; warriorAnim.SetBool("autoShootFlag", false); }
-        }
+            {
+                if (shootMode) { shootMode = false; }
+                else { shootMode = true; warriorAnim.SetBool("autoShootFlag", false); }
+            }
         if (shootMode)
         {
+            semiShootImg.gameObject.SetActive(true);
+            autoShootImg.gameObject.SetActive(false);
             if (Input.GetMouseButtonDown(0) && (Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
                 shootStart = Time.time;
@@ -94,6 +117,7 @@ public class WarriorShootController : MonoBehaviour
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
                 bb.setTrial(trial);
+                bb.setDmg(dmg);
 
                 if (bounceTrigger)
                 {
@@ -120,6 +144,8 @@ public class WarriorShootController : MonoBehaviour
         }
         else
         {
+            semiShootImg.gameObject.SetActive(false);
+            autoShootImg.gameObject.SetActive(true);
             if (Input.GetMouseButton(0) && (Time.time >= shootStart + autoShootInterval) && !inSemiShoot && !inReloading)
             {
                 shootStart = Time.time;
@@ -135,6 +161,7 @@ public class WarriorShootController : MonoBehaviour
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
                 bb.setTrial(trial);
+                bb.setDmg(dmg);
 
                 if (bounceTrigger)
                 {
@@ -173,6 +200,7 @@ public class WarriorShootController : MonoBehaviour
             inReloading = false;
             currentMagSize = magSize;
         }
+        magText.text = currentMagSize.ToString() + " / " + magSize.ToString();
     }
 
     public void hitFeedback()

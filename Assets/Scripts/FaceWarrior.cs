@@ -10,6 +10,7 @@ public class FaceWarrior : MonoBehaviour
     public float singleShootInterval = 0.5f;
     public float reloadTime = 2.667f;
     public int magSize = 30;
+    public float dmg = 25.0f;
 
     private float shootStart = -1.0f;
     private float reloadStart;
@@ -65,6 +66,7 @@ public class FaceWarrior : MonoBehaviour
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
                 bb.setTrial(trial);
+                bb.setDmg(dmg);
 
                 currentMagSize -= 1;
                 anim.SetTrigger("singleShootTrigger");

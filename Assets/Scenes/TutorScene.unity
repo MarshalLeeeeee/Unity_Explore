@@ -1440,14 +1440,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4625637059168951549, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: powerBar
+      value: 
+      objectReference: {fileID: 868744086}
+    - target: {fileID: 7006035260895858840, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: shieldBar
+      value: 
+      objectReference: {fileID: 939540992}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: magText
+      value: 
+      objectReference: {fileID: 1257018148}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: bounceIcon
+      value: 
+      objectReference: {fileID: 720003299}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: throughIcon
+      value: 
+      objectReference: {fileID: 1172481002}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: autoShootImg
+      value: 
+      objectReference: {fileID: 795401393}
     - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
       propertyPath: crosshairHit
       value: 
       objectReference: {fileID: 301194436}
     - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: semiShootImg
+      value: 
+      objectReference: {fileID: 605346293}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: bounceCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: throughCoolDown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221377091732924123, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
       propertyPath: crosshairHitTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7221377091732924124, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 195589376}
     - target: {fileID: 7221377092023779251, guid: af10fae9c187b3e4b96de5d56caac61f, type: 3}
       propertyPath: m_Name
       value: Warrior
@@ -2464,6 +2504,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1499840485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499840486}
+  - component: {fileID: 1499840487}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499840486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499840485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 499.2446, y: 293.21674, z: -70.23973}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1499840487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499840485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd614fc53d96064197acd1e93a333c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 1846349033}
+  ifCount: 1
 --- !u!1 &1518451242
 GameObject:
   m_ObjectHideFlags: 0

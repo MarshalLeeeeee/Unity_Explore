@@ -15,6 +15,7 @@ public class BulletBehavior : MonoBehaviour
     private bool bounceTrigger = false;
     private bool throughTrigger = false;
     private GameObject trial;
+    private float dmg = 10.0f;
 
     private void Start()
     {
@@ -45,7 +46,7 @@ public class BulletBehavior : MonoBehaviour
         {
             if (collision.transform.tag == "NPC")
             {
-                collision.gameObject.GetComponent<NpcHealthController>().takeDamage(10);
+                collision.gameObject.GetComponent<NpcHealthController>().takeDamage(dmg);
             }
             if (collision.transform.tag == "HealthBall")
             {
@@ -66,7 +67,7 @@ public class BulletBehavior : MonoBehaviour
 
         if (shooter.tag == "NPC" && collision.transform.tag == "Player")
         {
-            collision.gameObject.GetComponent<WarriorHealthController>().takeDamage(1);
+            collision.gameObject.GetComponent<WarriorHealthController>().takeDamage(dmg);
         }
 
         Destroy(gameObject, 1.0f);
@@ -93,5 +94,10 @@ public class BulletBehavior : MonoBehaviour
     public void setTrial(GameObject t)
     {
         trial = t;
+    }
+
+    public void setDmg(float d)
+    {
+        dmg = d;
     }
 }

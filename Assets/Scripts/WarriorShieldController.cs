@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WarriorShieldController : MonoBehaviour
 {
+    public GameObject shieldBar;
     public float shieldLevel_1;
     public float shieldLevel_2;
     public float shieldLevel_3;
@@ -15,7 +17,13 @@ public class WarriorShieldController : MonoBehaviour
     private Color shieldColor_1 = new Color(0.0f, 0.0f, 1.0f, 100.0f / 255.0f); // blue
     private Color shieldColor_2 = new Color(148.0f / 255.0f, 0.0f, 211.0f / 255.0f, 100.0f / 255.0f); // purple
     private Color shieldColor_3 = new Color(1.0f, 105.0f / 255.0f, 180.0f / 255.0f, 100.0f / 255.0f); // pink
-    private Color shieldColor_4 = new Color(1.0f, 215.0f / 255.0f, 0.0f, 100.0f / 255.0f); // gold
+    private Color shieldColor_4 = new Color(1.0f, 140.0f / 255.0f, 0.0f, 100.0f / 255.0f); // orange
+
+    private Color shieldBarColor_0 = new Color(1.0f, 1.0f, 1.0f, 1.0f); // white
+    private Color shieldBarColor_1 = new Color(0.0f, 0.0f, 1.0f, 1.0f); // blue
+    private Color shieldBarColor_2 = new Color(148.0f / 255.0f, 0.0f, 211.0f / 255.0f, 1.0f); // purple
+    private Color shieldBarColor_3 = new Color(1.0f, 105.0f / 255.0f, 180.0f / 255.0f, 1.0f); // pink
+    private Color shieldBarColor_4 = new Color(1.0f, 140.0f / 255.0f, 0.0f, 1.0f); // orange
 
     private Material materialArm;
     private Material materialBackpack;
@@ -24,6 +32,8 @@ public class WarriorShieldController : MonoBehaviour
     private Material materialLeg;
 
     private WarriorController wc;
+    private WarriorHealthController whc;
+    private Image bar;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +44,8 @@ public class WarriorShieldController : MonoBehaviour
         materialHead = transform.Find("head1").gameObject.GetComponent<Renderer>().material;
         materialLeg = transform.Find("Leg1").gameObject.GetComponent<Renderer>().material;
         wc = gameObject.GetComponent<WarriorController>();
+        whc = gameObject.GetComponent<WarriorHealthController>();
+        bar = shieldBar.transform.Find("Bar").gameObject.GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -42,6 +54,8 @@ public class WarriorShieldController : MonoBehaviour
         int oldLevel = currentLevel;
         if (0.0f <= currentShield && currentShield < shieldLevel_1)
         {
+            bar.color = shieldBarColor_0;
+            shieldBar.transform.localScale = new Vector3(currentShield / shieldLevel_1, 1.0f, 1.0f);
             materialArm.color = shieldColor_0;
             materialBackpack.color = shieldColor_0;
             materialBody.color = shieldColor_0;
@@ -51,6 +65,8 @@ public class WarriorShieldController : MonoBehaviour
         }
         else if (shieldLevel_1 <= currentShield && currentShield < shieldLevel_2)
         {
+            bar.color = shieldBarColor_1;
+            shieldBar.transform.localScale = new Vector3((currentShield - shieldLevel_1) / (shieldLevel_2 - shieldLevel_1), 1.0f, 1.0f);
             materialArm.color = shieldColor_1;
             materialBackpack.color = shieldColor_1;
             materialBody.color = shieldColor_1;
@@ -60,6 +76,8 @@ public class WarriorShieldController : MonoBehaviour
         }
         else if (shieldLevel_2 <= currentShield && currentShield < shieldLevel_3)
         {
+            bar.color = shieldBarColor_2;
+            shieldBar.transform.localScale = new Vector3((currentShield - shieldLevel_2) / (shieldLevel_3 - shieldLevel_2), 1.0f, 1.0f);
             materialArm.color = shieldColor_2;
             materialBackpack.color = shieldColor_2;
             materialBody.color = shieldColor_2;
@@ -69,6 +87,8 @@ public class WarriorShieldController : MonoBehaviour
         }
         else if (shieldLevel_3 <= currentShield && currentShield < shieldLevel_4)
         {
+            bar.color = shieldBarColor_3;
+            shieldBar.transform.localScale = new Vector3((currentShield - shieldLevel_3) / (shieldLevel_4 - shieldLevel_3), 1.0f, 1.0f);
             materialArm.color = shieldColor_3;
             materialBackpack.color = shieldColor_3;
             materialBody.color = shieldColor_3;
@@ -78,6 +98,8 @@ public class WarriorShieldController : MonoBehaviour
         }
         else if (shieldLevel_4 <= currentShield)
         {
+            bar.color = shieldBarColor_4;
+            shieldBar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             materialArm.color = shieldColor_4;
             materialBackpack.color = shieldColor_4;
             materialBody.color = shieldColor_4;
@@ -88,6 +110,7 @@ public class WarriorShieldController : MonoBehaviour
         if (oldLevel != currentLevel)
         {
             wc.updateShield(currentLevel);
+            whc.updateShield(currentLevel);
         }
     }
 

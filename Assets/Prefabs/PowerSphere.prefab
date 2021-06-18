@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posRange: {x: 5, y: 5, z: 5}
-  switchTime: 1
+  switchTime: 3
 --- !u!114 &-5481237758443277490
 MonoBehaviour:
   m_ObjectHideFlags: 0

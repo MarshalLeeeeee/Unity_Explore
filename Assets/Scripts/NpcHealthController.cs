@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class NpcHealthController : MonoBehaviour
 {
-    public int initHealth = 100;
+    public float initHealth = 100;
     public float deathHeight = -10.0f;
-    public int wallDamage = 50;
+    public float wallDamage = 50;
     public float powerFeedback = 0.2f;
     public float shieldFeedBack = 0.5f;
 
-    private int maxHealth;
-    private int currentHealth;
+    private float maxHealth;
+    private float currentHealth;
     private bool alive = true;
 
     private GameObject warrior;
@@ -48,17 +48,17 @@ public class NpcHealthController : MonoBehaviour
         }
     }
 
-    public void takeDamage(int dmg)
+    public void takeDamage(float dmg)
     {
-        int oldHealth = currentHealth;
+        float oldHealth = currentHealth;
         currentHealth -= dmg;
         checkHealth();
-        int actualDmg = oldHealth - currentHealth;
+        float actualDmg = oldHealth - currentHealth;
         pc.addPower(actualDmg * powerFeedback);
         sc.hitFeedback();
     }
 
-    public void takeHeal(int heal)
+    public void takeHeal(float heal)
     {
         currentHealth += heal;
         checkHealth();

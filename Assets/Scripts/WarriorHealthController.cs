@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WarriorHealthController : MonoBehaviour
 {
+    public GameObject healthBar;
     public float initHealth = 100.0f;
     public float deathHeight = -10.0f;
     public float wallDamage = 50.0f;
@@ -30,11 +31,11 @@ public class WarriorHealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y <= deathHeight)
-        {
-            death();
-        }
+        if(transform.position.y <= deathHeight) death();
         if (currentHealth > prevHealthSound) prevHealthSound = currentHealth;
+
+        // health bar UI
+        healthBar.transform.localScale = new Vector3(currentHealth / maxHealth, 1.0f, 1.0f);
     }
 
     private void OnCollisionEnter(Collision collision)
