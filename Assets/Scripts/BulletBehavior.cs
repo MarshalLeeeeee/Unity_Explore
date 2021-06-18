@@ -42,7 +42,7 @@ public class BulletBehavior : MonoBehaviour
             }
         }
         
-        if (shooter.tag == "Player")
+        if (shooter != null && shooter.tag == "Player")
         {
             if (collision.transform.tag == "NPC")
             {
@@ -65,7 +65,7 @@ public class BulletBehavior : MonoBehaviour
             }
         }
 
-        if (shooter.tag == "NPC" && collision.transform.tag == "Player")
+        if (shooter != null && shooter.tag == "NPC" && collision.transform.tag == "Player")
         {
             collision.gameObject.GetComponent<WarriorHealthController>().takeDamage(dmg);
         }

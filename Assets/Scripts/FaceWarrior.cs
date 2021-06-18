@@ -7,15 +7,19 @@ public class FaceWarrior : MonoBehaviour
     public float senseRadius;
     public GameObject logicBullet;
     public GameObject bulletTrial;
+    public GameObject aimRange;
     public float singleShootInterval = 0.5f;
+    public float autoReloadInterval = 3.0f;
     public float reloadTime = 2.667f;
     public int magSize = 30;
     public float dmg = 25.0f;
 
     private float shootStart = -1.0f;
+    private float collideStart = -100.0f;
     private float reloadStart;
     private int currentMagSize;
     private bool inReloading = false;
+    private bool sense = false;
 
     private Animator anim;
     private Transform rifleTransform;
@@ -26,6 +30,7 @@ public class FaceWarrior : MonoBehaviour
     private RifleSoundController rifleSoundController;
 
     private Vector3 shootPoint;
+    private RaycastHit hit;
     private float xangle = 0.0f;
 
     // Start is called before the first frame update
@@ -42,17 +47,20 @@ public class FaceWarrior : MonoBehaviour
         warrior = GameObject.FindWithTag("Player");
         warriorTransform = warrior.transform;
         spineTransformWarrior = warriorTransform.Find("Hips/Spine");
+        GameObject ar = Instantiate(aimRange, transform);
+        ar.transform.localScale = new Vector3(senseRadius, senseRadius, senseRadius);
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 relative =  warriorTransform.position - transform.position;
-        if (Mathf.Abs(relative.magnitude) < senseRadius)
+        if (sense)
         {
             xangle = Mathf.Rad2Deg * Mathf.Acos(relative.normalized.y);
             Vector3 relativeProj = Vector3.ProjectOnPlane(relative, transform.up).normalized;
             transform.LookAt(transform.position + relativeProj);
+            collideStart = Time.time;
 
             if ((Time.time >= shootStart + singleShootInterval) && !inReloading)
             {
@@ -60,22 +68,26 @@ public class FaceWarrior : MonoBehaviour
                 shootPoint = rifleTransform.position + rifleTransform.up * (-0.9f) + rifleTransform.right * (-0.9f);
 
                 Vector3 shootDirection = (spineTransformWarrior.position - shootPoint).normalized;
-                GameObject trial = Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(Vector3.forward, shootDirection));
+                Vector3 shootLogicPoint = spineTransform.position + relative.normalized * 1.0f;
 
-                GameObject bulletObject = Instantiate(logicBullet, spineTransform.position + relative.normalized * 1.0f, Quaternion.FromToRotation(Vector3.forward, relative.normalized));
-                BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
-                bb.setShooter(transform);
-                bb.setTrial(trial);
-                bb.setDmg(dmg);
+                if (Physics.Raycast(new Ray(shootLogicPoint, relative.normalized), out hit, 1000.0f) && hit.transform.tag == "Player")
+                {
+                    GameObject trial = Instantiate(bulletTrial, shootPoint, Quaternion.FromToRotation(Vector3.forward, shootDirection));
+                    GameObject bulletObject = Instantiate(logicBullet, spineTransform.position + relative.normalized * 1.0f, Quaternion.FromToRotation(Vector3.forward, relative.normalized));
+                    BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
+                    bb.setShooter(transform);
+                    bb.setTrial(trial);
+                    bb.setDmg(dmg);
 
-                currentMagSize -= 1;
-                anim.SetTrigger("singleShootTrigger");
+                    currentMagSize -= 1;
+                    anim.SetTrigger("singleShootTrigger");
+                }
             }
         }
         else
         {
             xangle = 90.0f;
-            if (currentMagSize < magSize && !inReloading)
+            if (currentMagSize < magSize && !inReloading && Time.time > collideStart + autoReloadInterval)
             {
                 inReloading = true;
                 reloadStart = Time.time;
@@ -106,5 +118,10 @@ public class FaceWarrior : MonoBehaviour
     public float getPoseXAngle()
     {
         return xangle - 90.0f;
+    }
+
+    public void ifSense(bool flag)
+    {
+        sense = flag;
     }
 }

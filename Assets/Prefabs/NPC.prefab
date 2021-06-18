@@ -1851,12 +1851,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36c3675a9009db4d99d3dafcca0dc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  senseRadius: 10
+  senseRadius: 30
   logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
   bulletTrial: {fileID: 7045583799490840615, guid: 8628624f50ffa90429914d5eb6e48e32, type: 3}
+  aimRange: {fileID: 8498828205601979440, guid: 7847fd6ffd2212a4495a031fdcde949e, type: 3}
   singleShootInterval: 0.5
+  autoReloadInterval: 3
   reloadTime: 2.667
   magSize: 30
+  dmg: 25
 --- !u!114 &-2280348200969043058
 MonoBehaviour:
   m_ObjectHideFlags: 0
