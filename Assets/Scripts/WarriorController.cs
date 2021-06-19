@@ -16,6 +16,7 @@ public class WarriorController : MonoBehaviour
     public float jumpProb = 0.0f;
     public GameObject[] jetSmokes;
     private GameObject jetSmoke;
+    private GameObject prevJetSmoke;
 
     float horizonInput;
     float forwardInput;
@@ -29,6 +30,9 @@ public class WarriorController : MonoBehaviour
     private Vector3 horizonVelocity = new Vector3(0.0f, 0.0f, 0.0f); // horizon accelaration along surface in world coordinate
     private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f); // velocity in world coordinate
     private Vector3 velocityLocal = new Vector3(0.0f, 0.0f, 0.0f); // velocity in surface coordinate
+    private float speedAmp = 1.0f;
+    private int currentLevel = 0;
+    private bool usingUlt = false;
 
     private float forwardSpeedInAir; // control inAir animation
     private float horizonSpeedInAir; // control inAir animation
@@ -88,7 +92,7 @@ public class WarriorController : MonoBehaviour
 
         warriorRb.AddForce(forwardVelocity, ForceMode.Force);
         warriorRb.AddForce(horizonVelocity, ForceMode.Force);
-        velocityLocal = new Vector3(Mathf.Clamp(velocityLocal.x, -horizonSpeedMax, horizonSpeedMax), velocityLocal.y, Mathf.Clamp(velocityLocal.z, -backwardSpeedMax, forwardSpeedMax));
+        velocityLocal = new Vector3(Mathf.Clamp(velocityLocal.x, -horizonSpeedMax * speedAmp, horizonSpeedMax * speedAmp), velocityLocal.y, Mathf.Clamp(velocityLocal.z, -backwardSpeedMax * speedAmp, forwardSpeedMax * speedAmp));
         velocity = Matrix4x4.Rotate(Quaternion.FromToRotation(Vector3.forward, transform.forward)).MultiplyPoint3x4(planeRotationMatrix.MultiplyPoint3x4(velocityLocal));
         warriorRb.velocity = velocity;
 
@@ -138,7 +142,7 @@ public class WarriorController : MonoBehaviour
             // fly to still
             soundController.still();
         }
-        else if (groundSpeedPrev <= 0.1f && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
+        else if (groundSpeedPrev <= 0.1f && groundSpeed > horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f)
         {
             // still or fly to run
             soundController.run();
@@ -148,7 +152,7 @@ public class WarriorController : MonoBehaviour
             // still or fly to walk
             soundController.walk();
         }
-        else if (groundSpeedPrev <= horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
+        else if (groundSpeedPrev <= horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed > horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f)
         {
             // walk to run
             soundController.run();
@@ -158,12 +162,12 @@ public class WarriorController : MonoBehaviour
             // any to fly
             soundController.fly();
         }
-        else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= 0.1f)
+        else if (groundSpeedPrev > horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= 0.1f)
         {
             // run to still
             soundController.still();
         }
-        else if (groundSpeedPrev > horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= horizonSpeedMax * Mathf.Sqrt(2.0f) + 0.1f)
+        else if (groundSpeedPrev > horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f && groundSpeed <= horizonSpeedMax * speedAmp * Mathf.Sqrt(2.0f) + 0.1f)
         {
             // run to walk
             soundController.walk();
@@ -267,6 +271,38 @@ public class WarriorController : MonoBehaviour
 
     public void updateShield(int i)
     {
-        jetSmoke = jetSmokes[i];
+        currentLevel = i;
+        if (!usingUlt) updateSmoke(i);
+    }
+
+    private void updateSmoke(int i)
+    {
+        if (i == -1) jetSmoke = jetSmokes[jetSmokes.Length - 1];
+        else jetSmoke = jetSmokes[i];
+
+        if (leftJetSmoke)
+        {
+            var m = leftJetSmoke.GetComponent<ParticleSystem>().main;
+            m.startColor = jetSmoke.GetComponent<ParticleSystem>().main.startColor;
+        }
+        if (rightJetSmoke)
+        {
+            var m = rightJetSmoke.GetComponent<ParticleSystem>().main;
+            m.startColor = jetSmoke.GetComponent<ParticleSystem>().main.startColor;
+        }
+    }
+
+    public void startUlt(float amp)
+    {
+        usingUlt = true;
+        speedAmp = amp;
+        updateSmoke(-1);
+    }
+
+    public void endUlt()
+    {
+        usingUlt = false;
+        speedAmp = 1.0f;
+        updateSmoke(currentLevel);
     }
 }

@@ -81,6 +81,9 @@ MonoBehaviour:
   bouncePad: {fileID: 6335659226511637200, guid: a0dfa243f1ce71c41982d8c5c516d98b, type: 3}
   throughPad: {fileID: 7005183098088986430, guid: def92c1a958db254cbb3d088f623a162, type: 3}
   bulletHit: {fileID: 3200597242540808042, guid: 80ef8eda5a943c74080680478ad34653, type: 3}
+  healthSupply: 25
+  powerSupply: 25
+  shieldSupply: 50
 --- !u!82 &1511878269304989005
 AudioSource:
   m_ObjectHideFlags: 0

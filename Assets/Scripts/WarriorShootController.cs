@@ -24,11 +24,13 @@ public class WarriorShootController : MonoBehaviour
     public float bounceCoolDown = 2.0f;
     public float throughCoolDown = 2.0f;
     public float crosshairHitTime = 1.0f;
-    public float dmg = 25.0f;
+    public float autoDmg = 25.0f;
+    public float semiDmg = 40.0f;
 
     private float shootStart = -100.0f;
     private float bounceStart = -100.0f;
     private float throughStart = -100.0f;
+    private float shootAmp = 1.0f;
     private float reloadStart;
     private int currentMagSize;
 
@@ -122,7 +124,7 @@ public class WarriorShootController : MonoBehaviour
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
                 bb.setTrial(trial);
-                bb.setDmg(dmg);
+                bb.setDmg(semiDmg * shootAmp);
 
                 if (bounceTrigger)
                 {
@@ -166,7 +168,7 @@ public class WarriorShootController : MonoBehaviour
                 BulletBehavior bb = bulletObject.GetComponent<BulletBehavior>();
                 bb.setShooter(transform);
                 bb.setTrial(trial);
-                bb.setDmg(dmg);
+                bb.setDmg(autoDmg * shootAmp);
 
                 if (bounceTrigger)
                 {
@@ -220,5 +222,10 @@ public class WarriorShootController : MonoBehaviour
         crosshairHit.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         crosshairHit.gameObject.SetActive(false);
+    }
+
+    public void setShootAmp(float amp)
+    {
+        shootAmp = amp;
     }
 }

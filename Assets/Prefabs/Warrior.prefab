@@ -1837,6 +1837,7 @@ MonoBehaviour:
   - {fileID: 9031473298392989480, guid: 142902c98ed8d8d40854fba81773f118, type: 3}
   - {fileID: 9031473298392989480, guid: 6ead2dc96cd75ac41ab62ec81200689d, type: 3}
   - {fileID: 9031473298392989480, guid: e79986118510b9943822c605cce7dbb6, type: 3}
+  jetSmokeUlt: {fileID: 0}
 --- !u!114 &7221377091732924120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,7 +1882,8 @@ MonoBehaviour:
   bounceCoolDown: 0
   throughCoolDown: 0
   crosshairHitTime: 1
-  dmg: 25
+  autoDmg: 25
+  semiDmg: 40
 --- !u!114 &-4625637059168951549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,6 +1898,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerBar: {fileID: 0}
   powerSpeed: 1
+  ultSpeed: 20
+  shootAmp: 1.5
+  speedAmp: 2
 --- !u!114 &7006035260895858840
 MonoBehaviour:
   m_ObjectHideFlags: 0
