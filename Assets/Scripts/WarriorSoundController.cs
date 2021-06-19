@@ -8,10 +8,25 @@ public class WarriorSoundController : MonoBehaviour
     public AudioClip walkSound;
     public AudioClip runSound;
     public AudioClip flySound;
+    private bool prevPause = false;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (PauseManager.isPause && !prevPause)
+        {
+            audioSource.Pause();
+            prevPause = true;
+        }
+        if (!PauseManager.isPause && prevPause)
+        {
+            audioSource.UnPause();
+            prevPause = false;
+        }
     }
 
     public void still()

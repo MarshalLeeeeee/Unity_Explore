@@ -12,6 +12,8 @@ public class WarriorPowerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isPause) return;
+
         // nature growth of power
         currentPower += powerSpeed * Time.deltaTime;
         currentPower = Mathf.Clamp(currentPower, 0.0f, maxPower);

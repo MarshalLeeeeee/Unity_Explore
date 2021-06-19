@@ -7,15 +7,14 @@ using TMPro;
 
 public class ButtonCollider : MonoBehaviour
 {
+    public Color enterColor;
     private TextMeshProUGUI bestTimeText;
     private Color initColor;
-    private Color enterColor;
 
     void Start()
     {
         bestTimeText = GameObject.Find(transform.name + "/Best").GetComponent<TextMeshProUGUI>();
         initColor = bestTimeText.color;
-        enterColor = new Color(255.0f, 255.0f, 0.0f); ;
     }
 
     private void OnMouseEnter()

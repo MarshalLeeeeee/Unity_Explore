@@ -11,13 +11,19 @@ public class TimeConut : MonoBehaviour
     private float currentTime;
     private int currentMinute = 0;
     private float currentSecond = 0.0f;
+    private float timeStart;
+
+    private void OnEnable()
+    {
+        timeStart = Time.time;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (ifCount)
         {
-            currentTime = Time.time;
+            currentTime = Time.time - timeStart;
             currentMinute = (int)(currentTime / 60.0f);
             currentSecond = currentTime - currentMinute * 60.0f;
             currentSecond = (int)(currentSecond * 100.0f) / 100.0f;

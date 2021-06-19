@@ -54,6 +54,8 @@ public class FaceWarrior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isPause) return;
+
         Vector3 relative =  warriorTransform.position - transform.position;
         if (sense)
         {

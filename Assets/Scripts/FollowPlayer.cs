@@ -22,6 +22,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isPause) return;
         transform.rotation = player.transform.rotation;
         transform.position = player.transform.Find("Hips/Spine/Chest/Neck/Head").position;
         xAngle -= Input.GetAxis("Mouse Y") * verticalSensitivity;

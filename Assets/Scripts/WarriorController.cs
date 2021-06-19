@@ -104,6 +104,8 @@ public class WarriorController : MonoBehaviour
 
     private void Update()
     {
+        if (PauseManager.isPause) return;
+
         // mouse movement
         if (userInput) yAngle = Input.GetAxis("Mouse X") * horizonSensitivity;
         transform.Rotate(0.0f, yAngle, 0.0f);

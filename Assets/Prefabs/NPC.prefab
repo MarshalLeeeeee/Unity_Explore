@@ -1887,7 +1887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initHealth: 100
-  deathHeight: -10
+  deathHeight: -50
   wallDamage: 50
   powerFeedback: 0.2
   shieldFeedBack: 0.5

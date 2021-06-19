@@ -70,6 +70,8 @@ public class WarriorShootController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isPause) return;
+
         // bounce skill
         if (Input.GetKeyDown(KeyCode.E) && Time.time >= bounceStart + bounceCoolDown)
         {

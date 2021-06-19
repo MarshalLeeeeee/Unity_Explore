@@ -1799,8 +1799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f479b3a540d6070458c83dea6e659896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
   initHealth: 100
-  deathHeight: -10
+  deathHeight: -50
   wallDamage: 50
   healthSoundInterval: 20
   shieldAbsorbtion:
@@ -1863,17 +1864,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c9b915e20e3e84ca84e2c38aa8b85f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magText: {fileID: 0}
+  crosshairHit: {fileID: 0}
+  bounceIcon: {fileID: 0}
+  throughIcon: {fileID: 0}
+  semiShootImg: {fileID: 0}
+  autoShootImg: {fileID: 0}
   logicBullet: {fileID: 1216061409758281377, guid: 72eed46ae0e74f548840e6cb35255df6, type: 3}
   shootGlow: {fileID: 3993267234817211191, guid: b2b13c953c334bc4983c6f5f384ab115, type: 3}
   bulletTrial: {fileID: 7045583799490840615, guid: 0595de7dd207e5d4488c5a9ce162c8d7, type: 3}
+  dmgText: {fileID: 0}
   singleShootInterval: 0.5
   autoShootInterval: 0.1
   reloadTime: 2.667
   magSize: 30
   bounceCoolDown: 0
   throughCoolDown: 0
-  crosshairHit: {fileID: 0}
   crosshairHitTime: 1
+  dmg: 25
 --- !u!114 &-4625637059168951549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1886,6 +1894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e746f6514ed73e04eb06c7480a3a8f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerBar: {fileID: 0}
   powerSpeed: 1
 --- !u!114 &7006035260895858840
 MonoBehaviour:
@@ -1899,6 +1908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b639e2a7adb1964483fdc2d42db2a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shieldBar: {fileID: 0}
   shieldLevel_1: 100
   shieldLevel_2: 150
   shieldLevel_3: 350

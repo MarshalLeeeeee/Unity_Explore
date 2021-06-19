@@ -148,6 +148,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Time: The interface to get time information. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Time.html).
    - deltaTime: The passed time of every frame.
    - frameCount: The total number of passed frames.
+   - timeScale: The scale of time. ```1.0f``` is the normal speed, ```0.5f``` slow the time to half and ```0.0f``` freeze the time which can be used as the way of pausing the game.
 
  - Random: Generate random data. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/Random.html).
    - Generate Vecotr4-like Color via ```ColorHSV```.
@@ -170,3 +171,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
    - ```lockState``` determines whether the hardware pointer is locked to the center of the view, constrained to the window, or not constrained at all. ```CursorLockMode.None``` makes the cursor unmodified, ```CursorLockMode.Locked``` makes the cursor lock at the center of the game window, ```CursorLockMode.Confined``` constrain the cursor inside the window.
    - ```visible``` determines whether the cursor is visible. Note that ```CursorLockMode.Locked``` implicitly makes the cursor invisible.
    - ```SetCursor(Texture2D texture, Vector2 hotspot, CursorMode cursorMode)``` set cursor with texture.
+
+ - SceneManager: API for Scene management at run-time. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.html).
+   - We can switch the scenes by ```void LoadScene(int sceneBuildIndex)``` or ```void LoadScene(string sceneName)```. The index of the scenes can be found in ```File / Build Settings```
+   - We can get the current active scene by ```GetActiveScene()```. The returned ```Scene``` type has properties, e.g., ```buildIndex```, ```name``` ect.

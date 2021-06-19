@@ -51,6 +51,8 @@ public class WarriorShieldController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isPause) return;
+
         int oldLevel = currentLevel;
         if (0.0f <= currentShield && currentShield < shieldLevel_1)
         {

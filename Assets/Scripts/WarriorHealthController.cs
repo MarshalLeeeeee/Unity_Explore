@@ -11,11 +11,11 @@ public class WarriorHealthController : MonoBehaviour
     public float healthSoundInterval = 20.0f;
     public float[] shieldAbsorbtion;
     private float currentShieldAbsorbtion;
-    
+    public static bool alive = true;
+
     private float maxHealth;
     private float prevHealthSound;
     private float currentHealth;
-    private bool alive = true;
     private HealthSoundController healthSound;
 
     // Start is called before the first frame update
@@ -36,6 +36,11 @@ public class WarriorHealthController : MonoBehaviour
 
         // health bar UI
         healthBar.transform.localScale = new Vector3(currentHealth / maxHealth, 1.0f, 1.0f);
+    }
+
+    private void OnEnable()
+    {
+        alive = true;
     }
 
     private void OnCollisionEnter(Collision collision)

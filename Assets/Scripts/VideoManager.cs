@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class VideoManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if (PauseManager.isPause) Cursor.lockState = CursorLockMode.None;
+        else Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 }
