@@ -71,6 +71,11 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Scene is managed by ```SceneManager```, which stores the information as well as behavior of the scene.
 
 
+### EffectScene
+ - Include particle systems with different demo effect.
+ - (TODO, more effects can be played with...)
+
+
 ### 2DScene (not included in this repo)
  - In a 2D template project, the camera is orthographic by default. The canvas is parallel to XY-Plane where the the width is measured in ```X``` and height is measured in ```Y```. Since the camera is orthographic, ```Z``` does not affect the size of a game object, however, affected the visibility among multiple objects. What's more, only when the ```Z coordinate``` of an object is within the camera clipping planes will it be seen by camera.
  - We can alter the scene view between 2D and 3D via ```2D Button``` in the tool bar of scene view so as to visualize the depth of objects.
@@ -175,3 +180,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - SceneManager: API for Scene management at run-time. For detailed API, click [here](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.html).
    - We can switch the scenes by ```void LoadScene(int sceneBuildIndex)``` or ```void LoadScene(string sceneName)```. The index of the scenes can be found in ```File / Build Settings```
    - We can get the current active scene by ```GetActiveScene()```. The returned ```Scene``` type has properties, e.g., ```buildIndex```, ```name``` ect.
+
+ - ParticleSystem: Interface for ParticleSystem, For detailed API, click [here](https://docs.unity3d.com/ScriptReference/ParticleSystem.html).
+   - The properties for every aspect in the edit panel corresponds to the specific attribute of ```ParticleSystem``` class.
+   - Play and stop the effect by ```Play()``` and ```Stop()```.
