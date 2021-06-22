@@ -35,7 +35,7 @@ public class NpcHealthController : MonoBehaviour
     {
         if (transform.position.y <= deathHeight)
         {
-            death();
+            takeDamage(currentHealth);
         }
     }
 

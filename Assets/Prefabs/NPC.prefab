@@ -1890,7 +1890,7 @@ MonoBehaviour:
   deathHeight: -50
   wallDamage: 50
   powerFeedback: 0.2
-  shieldFeedBack: 0.5
+  shieldFeedBack: 0.25
 --- !u!1 &2931519692313477958
 GameObject:
   m_ObjectHideFlags: 0

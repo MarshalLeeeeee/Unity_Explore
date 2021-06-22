@@ -27,9 +27,19 @@ public class SpaceRestrict : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 relative = transform.position - origin;
-        if ((x > 0.0f && Mathf.Abs(relative.x) > x) || (y > 0.0f && Mathf.Abs(relative.y) > y) || (z > 0.0f && Mathf.Abs(relative.z) > z))
+        Vector3 localForce = new Vector3(0.0f, 0.0f, 0.0f);
+        if (x > 0.0f && Mathf.Abs(relative.x) > x)
         {
-            rb.AddForce(-relative.normalized * force, ForceMode.Impulse);
+            localForce += relative.x * Vector3.right;
         }
+        if (y > 0.0f && Mathf.Abs(relative.y) > y)
+        {
+            localForce += relative.y * Vector3.up;
+        }
+        if (z > 0.0f && Mathf.Abs(relative.z) > z)
+        {
+            localForce += relative.z * Vector3.forward;
+        }
+        rb.AddForce(-localForce.normalized * force, ForceMode.Impulse);
     }
 }
