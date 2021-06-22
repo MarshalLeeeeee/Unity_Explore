@@ -26,6 +26,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
  - Create a new material via ```right clicking parent folder in project view / Create / Material```.
  - Load texture image via ```dragging the target image to Base Map```. The albedo color still affects. 
  - ```Physic Material``` can be added to GameObject on its collider material, which is used to adjust friction and bouncing effects of colliding objects. For more details, click[here](https://docs.unity3d.com/Manual/class-PhysicMaterial.html). ```Friction``` reflects to coefficient of friction, ```[0,1]```, which is further classified as ```static friction``` and ```dynamic friction```. ```Bounciness``` reflects to bouncy, ```[0,1]```. Both parameter has mode of ```Combine```, which defines how the parameter of the two colliders are combined. The combination priority is ```Average < Minimum < Multiply < Maximum```. The default setup for ```Physic Material = None``` is the default initialized setup.
+ - Material can be emissive, the simplest emissive effect can be realized by choosing ```Emission``` for the material and define the light color and intensity.
  - We can get the material of the gameObject by ```GetComponent<Renderer>().material```.
 
 
