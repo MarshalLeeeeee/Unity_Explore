@@ -23,7 +23,7 @@ public class TimeConut : MonoBehaviour
     {
         if (ifCount)
         {
-            currentTime = Time.time - timeStart;
+            currentTime = getTime();
             currentMinute = (int)(currentTime / 60.0f);
             currentSecond = currentTime - currentMinute * 60.0f;
             currentSecond = (int)(currentSecond * 100.0f) / 100.0f;
@@ -32,5 +32,10 @@ public class TimeConut : MonoBehaviour
             timeText.text = timeStr;
         }
         else timeText.text = "N / A";
+    }
+
+    public float getTime()
+    {
+        return Time.time - timeStart;
     }
 }

@@ -5306,6 +5306,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3807950483527720516, guid: b43732d65e1a94d4b909bcbd29f5613e, type: 3}
+      propertyPath: ifCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807950483527720516, guid: b43732d65e1a94d4b909bcbd29f5613e, type: 3}
       propertyPath: timeText
       value: 
       objectReference: {fileID: 1846349033}

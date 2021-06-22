@@ -74,6 +74,7 @@ Scenes are categoried by the big part in Unity. Every scene includes the feature
 
 ### EffectScene
  - Include particle systems with different demo effect.
+ - Bloom post processing can be achieved by first adding ```Volumn``` component and add ```Postprocessing > Bloom```.
  - (TODO, more effects can be played with...)
 
 
