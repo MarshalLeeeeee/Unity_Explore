@@ -8,7 +8,7 @@ public class Through : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.attachedRigidbody && other.tag != "Bullet" && !other.isTrigger)
+        if (other.attachedRigidbody && other.tag != "Bullet" && other.tag != "NPCSense" && !other.isTrigger)
         {
             other.isTrigger = true;
             if (Vector3.Dot(other.transform.position - transform.position, transform.up) > 0.0f)
@@ -24,6 +24,6 @@ public class Through : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.attachedRigidbody && other.tag != "Bullet" && other.isTrigger) other.isTrigger = false;
+        if (other.attachedRigidbody && other.tag != "Bullet" && other.tag != "NPCSense" && other.isTrigger) other.isTrigger = false;
     }
 }
