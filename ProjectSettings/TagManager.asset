@@ -15,6 +15,9 @@ TagManager:
   - ShieldBall
   - Canvas
   - NPCSense
+  - UINotLogin
+  - UIHasLogin
+  - UIWarning
   layers:
   - Default
   - TransparentFX

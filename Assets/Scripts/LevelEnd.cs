@@ -11,6 +11,11 @@ public class LevelEnd : MonoBehaviour
         levelEnd = false;
     }
 
+    private void OnDisable()
+    {
+        levelEnd = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Player")
