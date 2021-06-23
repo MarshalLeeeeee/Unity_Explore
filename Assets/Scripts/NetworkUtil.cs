@@ -26,7 +26,7 @@ public class NetworkUtil
     public static bool waitRead = false;
     public static bool waitWrite = false;
     public static bool isLogin = false;
-    public static bool updateLogin = false;
+    public static bool updateLogin = true;
     public static bool toShowLoginError = false;
 
     public static void login(string u, string p)
@@ -90,8 +90,11 @@ public class NetworkUtil
     public static void setLoginState(bool f)
     {
         if (isLogin == f) updateLogin = false;
-        isLogin = f;
-        updateLogin = true;
+        else
+        {
+            isLogin = f;
+            updateLogin = true;
+        }
     }
 
     public static void sendMsg(string msg)

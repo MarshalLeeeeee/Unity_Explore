@@ -13,6 +13,10 @@ public class Client : MonoBehaviour
     public TMP_InputField passwordInput;
     public TextMeshProUGUI loginInfo;
 
+    private float waitLoginTime;
+    private float waitLogoutTime;
+    private float waitReadTime;
+
     private GameObject[] uiNotLogin;
     private GameObject[] uiHasLogin;
     private GameObject[] uiWarning;
@@ -34,8 +38,7 @@ public class Client : MonoBehaviour
     {
         if (NetworkUtil.toShowLoginError)
         {
-            StartCoroutine(showLoginError(0.5f));
-            NetworkUtil.toShowLoginError = false;
+            StartCoroutine(showLoginError(1.0f));
         }
         if (NetworkUtil.updateLogin)
         {
@@ -44,8 +47,13 @@ public class Client : MonoBehaviour
             for (var i = 0; i < uiHasLogin.Length; i++) uiHasLogin[i].SetActive(NetworkUtil.isLogin);
             for (var i = 0; i < uiNotLogin.Length; i++) uiNotLogin[i].SetActive(!NetworkUtil.isLogin);
             for (var i = 0; i < uiWarning.Length; i++) uiWarning[i].SetActive(false);
-            NetworkUtil.updateLogin = false;
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (NetworkUtil.toShowLoginError) NetworkUtil.toShowLoginError = false;
+        if (NetworkUtil.updateLogin) NetworkUtil.updateLogin = false;
     }
 
     private void OnApplicationQuit()
